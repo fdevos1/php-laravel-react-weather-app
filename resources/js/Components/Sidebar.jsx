@@ -7,7 +7,7 @@ import { SidebarContext } from "@/Context/SidebarContext";
 export default function Sidebar({ open }) {
     const ref = useRef();
 
-    const { setOpenHistoryModal } = useContext(ModalContext);
+    const { setOpenModal, setActiveModal } = useContext(ModalContext);
     const { setOpenSidebar } = useContext(SidebarContext);
 
     useEffect(() => {
@@ -24,15 +24,17 @@ export default function Sidebar({ open }) {
         {
             icon: "history",
             title: "Histórico de consulta",
-            setState: setOpenHistoryModal,
+            active: 0,
         },
         {
             icon: "queries",
             title: "Consultas salvas",
+            active: 1,
         },
         {
             icon: "compare",
             title: "Comparar climas",
+            active: 2,
         },
     ];
 
@@ -58,11 +60,12 @@ export default function Sidebar({ open }) {
                 </div>
 
                 <ul className="flex-1 px-3 mt-4">
-                    {items.map(({ icon, title, setState }) => (
+                    {items.map(({ icon, title, active }) => (
                         <li
                             className="flex items-center py-1 px-2 my-2 gap-4 font-medium rounded-md cursor-pointer   hover:bg-sky-300 hover:text-white"
                             onClick={() => {
-                                setState(true);
+                                setOpenModal(true);
+                                setActiveModal(active);
                                 setOpenSidebar(false);
                             }}
                         >

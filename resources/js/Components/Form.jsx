@@ -8,8 +8,13 @@ import { formValidation } from "@/Helpers/schemaValidation";
 import { addToHistory } from "@/Helpers/localStorageHistory";
 import { WeatherContext } from "@/Context/WeatherContext";
 
-export default function Form({ setLoading }) {
-    const { setWeatherInfo } = useContext(WeatherContext);
+export default function Form({ type }) {
+    const {
+        setWeatherInfo,
+        setComparisionWeatherInfo,
+        setSelectedWeatherInfo,
+        setLoading,
+    } = useContext(WeatherContext);
 
     let query = "";
     let response = {};
@@ -22,6 +27,8 @@ export default function Form({ setLoading }) {
         onSubmit: async (data) => {
             const { city } = data;
 
+            console.log(data);
+
             setLoading(true);
 
             try {
@@ -32,6 +39,14 @@ export default function Form({ setLoading }) {
                 addToHistory(query, response);
 
                 const { location, current } = cityQuery;
+
+                if (type === "comparision-query") {
+                    setComparisionWeatherInfo({ location, current });
+                }
+
+                if (type === "query-small") {
+                    setSelectedWeatherInfo({ location, current });
+                }
 
                 setWeatherInfo({ location, current });
                 setTimeout(() => setLoading(false), 500);
@@ -65,19 +80,41 @@ export default function Form({ setLoading }) {
 
     return (
         <>
-            <div className="flex flex-col rounded justify-between items-center p-4">
+            <div className="flex  justify-between items-center p-4">
                 <form onSubmit={formikProps.handleSubmit}>
-                    <div className="h-48 flex flex-col items-center justify-between">
-                        <div className="flex flex-col gap-2 items-center">
+                    <div className="h-48 w-full flex flex-col justify-between">
+                        <div
+                            className={` flex flex-col
+                            w-full
+                           
+                            gap-2 ${
+                                type === "comparision-query" ||
+                                type === "query-small"
+                                    ? "items-start"
+                                    : "items-center"
+                            }`}
+                        >
                             <InputMask
+                                className={`${
+                                    type === "comparision-query" ||
+                                    type === "query-small"
+                                        ? "max-w-44"
+                                        : ""
+                                }`}
                                 placeholder="Insira o CEP desejado"
                                 name="cep"
                                 value={formikProps.values.cep}
                                 onChange={formikProps.handleChange}
                                 onBlur={handleBlurOnCEP}
                             />
-                            <p>Ou</p>
+                            <p className="self-center">Ou</p>
                             <input
+                                className={`${
+                                    type === "comparision-query" ||
+                                    type === "query-small"
+                                        ? "max-w-44"
+                                        : ""
+                                }`}
                                 placeholder="A cidade desejada"
                                 name="city"
                                 value={formikProps.values.city}

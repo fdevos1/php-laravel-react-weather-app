@@ -6,11 +6,11 @@ import Icon from "./icons/icon";
 import Weather from "./Weather";
 import { ModalContext } from "@/Context/ModalContext";
 
-export default function QueriesHistory({ onClose }) {
+export default function QueriesHistory() {
     const [queries, setQueries] = useState([]);
     const [selectedQuery, setSelectedQuery] = useState(undefined);
 
-    const { setOpenHistoryModal } = useContext(ModalContext);
+    const { setOpenModal } = useContext(ModalContext);
 
     const retrievedQueries = retrieveHistory();
 
@@ -23,7 +23,7 @@ export default function QueriesHistory({ onClose }) {
             <div className="flex flex-col h-[600px] w-full px-4 bg-white rounded gap-2">
                 <div className="flex w-full justify-between items-center pt-4">
                     <h3>Histórico de consultas</h3>
-                    <button onClick={() => setOpenHistoryModal(false)}>
+                    <button onClick={() => setOpenModal(false)}>
                         <Icon name="close" />
                     </button>
                 </div>

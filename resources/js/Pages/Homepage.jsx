@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import Layout from "@/Layouts/Layout";
 
@@ -6,15 +6,14 @@ import Form from "@/Components/Form";
 import Weather from "@/Components/Weather";
 import Modal from "@/Components/Modal";
 import QueriesHistory from "@/Components/QueriesHistory";
+import CompareData from "@/Components/CompareData";
 
 import { ModalContext } from "@/Context/ModalContext";
 import { WeatherContext } from "@/Context/WeatherContext";
 
 export default function Welcome() {
-    const [loading, setLoading] = useState(false);
-
-    const { openHistoryModal } = useContext(ModalContext);
-    const { weatherInfo, setWeatherInfo } = useContext(WeatherContext);
+    const { openModal, activeModal } = useContext(ModalContext);
+    const { weatherInfo, setWeatherInfo, loading } = useContext(WeatherContext);
 
     return (
         <>
@@ -68,7 +67,7 @@ export default function Welcome() {
                                             </div>
                                         ) : (
                                             <>
-                                                <Form setLoading={setLoading} />
+                                                <Form type="query" />
                                             </>
                                         )}
                                     </>
@@ -79,8 +78,16 @@ export default function Welcome() {
                 </>
             </Layout>
 
-            <Modal isOpen={openHistoryModal}>
-                <QueriesHistory />
+            <Modal isOpen={openModal}>
+                {activeModal === 0 ? (
+                    <QueriesHistory />
+                ) : activeModal === 1 ? (
+                    <></>
+                ) : activeModal === 2 ? (
+                    <CompareData />
+                ) : (
+                    <></>
+                )}
             </Modal>
         </>
     );
