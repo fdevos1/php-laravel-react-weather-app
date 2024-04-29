@@ -27,3 +27,7 @@ section {
     padding: 100px 0;
     max-width: 1000px;
 }
+
+li:hover > svg > path {
+    fill: white;
+}

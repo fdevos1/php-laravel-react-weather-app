@@ -8,3 +8,6 @@ export { default as IconWind } from "./wind";
 export { default as IconClouds } from "./cloud";
 export { default as IconOptions } from "./options";
 export { default as IconChevronLeft } from "./chevronLeft";
+export { default as IconHistory } from "./history";
+export { default as IconQueries } from "./query";
+export { default as IconCompare } from "./compare";

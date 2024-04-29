@@ -9,6 +9,9 @@ import {
     IconClouds,
     IconOptions,
     IconChevronLeft,
+    IconHistory,
+    IconQueries,
+    IconCompare,
 } from ".";
 
 const Icon = ({ name }) => {
@@ -33,6 +36,12 @@ const Icon = ({ name }) => {
             return <IconOptions />;
         case "chevron-left":
             return <IconChevronLeft />;
+        case "history":
+            return <IconHistory />;
+        case "queries":
+            return <IconQueries />;
+        case "compare":
+            return <IconCompare />;
     }
 };
 
