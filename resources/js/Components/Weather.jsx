@@ -4,9 +4,6 @@ import Thermometer from "./Thermometer";
 const Weather = ({ weatherInfo }) => {
     const { current, location } = weatherInfo;
 
-    const isDay =
-        current.is_day === "yes" ? "title-text-day" : "title-text-night";
-
     const weatherItems = [
         {
             title: "Sensação térmica",
@@ -34,7 +31,7 @@ const Weather = ({ weatherInfo }) => {
 
     return (
         <>
-            <div className="flex flex-col w-full h-[400px] gap-4 rounded-t-lg">
+            <div className="flex flex-col w-full h-auto gap-4 rounded-t-lg">
                 <div className="flex items-center justify-center gap-4">
                     <img src={current.weather_icons[0]} alt="weather_icon" />
 
@@ -57,7 +54,7 @@ const Weather = ({ weatherInfo }) => {
                         <div className="flex flex-col justify-between h-20 px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow">
                             <div className="flex gap-2">
                                 {item.icon}
-                                <p className={`uppercase text-xs ${isDay}`}>
+                                <p className="uppercase text-xs">
                                     {item.title}
                                 </p>
                             </div>
@@ -72,14 +69,12 @@ const Weather = ({ weatherInfo }) => {
                     <div className="col-span-2 flex flex-col justify-between h-auto px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow">
                         <div className="flex gap-2 h-5 items-center">
                             <Icon name="wind" />
-                            <p className={`uppercase text-xs ${isDay}`}>
-                                Vento
-                            </p>
+                            <p className="uppercase text-xs">Vento</p>
                         </div>
 
                         <div>
                             <div className="flex justify-between items-center">
-                                <p className={`uppercase text-xs ${isDay}`}>
+                                <p className="uppercase text-xs">
                                     Velocidade do vento
                                 </p>
                                 <span className="text-lg text-center text-neutral-100 drop-shadow">
@@ -87,7 +82,7 @@ const Weather = ({ weatherInfo }) => {
                                 </span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <p className={`uppercase text-xs ${isDay}`}>
+                                <p className="uppercase text-xs">
                                     Direção do vento
                                 </p>
                                 <span className="text-lg text-center text-neutral-100 drop-shadow">

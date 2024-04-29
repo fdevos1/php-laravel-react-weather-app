@@ -30,7 +30,7 @@ export default function Welcome() {
                             <div className="flex w-full h-full items-center justify-center">
                                 {loading !== false ? (
                                     <>
-                                        <div className="h-10 w-10 border rounded-full animate-spin"></div>
+                                        <div className="h-10 w-10 border border-sky-500 rounded-full animate-spin"></div>
                                     </>
                                 ) : (
                                     <>
@@ -39,6 +39,28 @@ export default function Welcome() {
                                                 <Weather
                                                     weatherInfo={weatherInfo}
                                                 />
+
+                                                <div className="flex flex-col w-full items-center gap-2 px-8">
+                                                    <button className="w-40">
+                                                        Salvar consulta
+                                                    </button>
+
+                                                    <div className="flex justify-between w-full">
+                                                        <button
+                                                            onClick={() =>
+                                                                setWeatherInfo(
+                                                                    undefined
+                                                                )
+                                                            }
+                                                        >
+                                                            Nova consulta
+                                                        </button>
+
+                                                        <button>
+                                                            Comparar clima
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         ) : (
                                             <>

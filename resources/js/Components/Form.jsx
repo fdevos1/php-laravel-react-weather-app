@@ -5,8 +5,12 @@ import InputMask from "./InputMask";
 
 import handleCityQuery from "../Helpers/cityQuery";
 import { formValidation } from "../Helpers/schemaValidation";
+import { addToHistory } from "@/Helpers/localStorageHistory";
 
 const Form = ({ setCurrentWeather, setLoading }) => {
+    let query = "";
+    let response = {};
+
     const formikProps = useFormik({
         initialValues: {
             cep: "",
@@ -19,11 +23,15 @@ const Form = ({ setCurrentWeather, setLoading }) => {
 
             try {
                 const cityQuery = await handleCityQuery({ city });
+                query = data;
+                response = cityQuery;
+
+                addToHistory(query, response);
 
                 const { location, current } = cityQuery;
 
                 setCurrentWeather({ location, current });
-                setTimeout(() => setLoading(false), 600);
+                setTimeout(() => setLoading(false), 500);
             } catch (err) {
                 console.error(err);
                 setLoading(false);
