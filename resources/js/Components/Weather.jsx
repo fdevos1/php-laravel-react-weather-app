@@ -54,7 +54,7 @@ export default function Weather({ weatherInfo }) {
                         <div className="flex flex-col justify-between h-20 px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow">
                             <div className="flex gap-2">
                                 {item.icon}
-                                <p className="uppercase text-xs">
+                                <p className="uppercase text-xs truncate">
                                     {item.title}
                                 </p>
                             </div>

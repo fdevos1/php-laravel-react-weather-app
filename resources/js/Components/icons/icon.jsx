@@ -12,6 +12,7 @@ import {
     IconHistory,
     IconQueries,
     IconCompare,
+    IconClose,
 } from ".";
 
 const Icon = ({ name }) => {
@@ -42,6 +43,8 @@ const Icon = ({ name }) => {
             return <IconQueries />;
         case "compare":
             return <IconCompare />;
+        case "close":
+            return <IconClose />;
     }
 };
 

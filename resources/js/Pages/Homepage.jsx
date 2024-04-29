@@ -4,9 +4,12 @@ import { WeatherContext } from "@/Context/WeatherContext";
 import Layout from "@/Layouts/Layout";
 import Form from "@/Components/Form";
 import Weather from "@/Components/Weather";
+import Modal from "@/Components/Modal";
+import QueriesHistory from "@/Components/QueriesHistory";
 
 export default function Welcome() {
     const [loading, setLoading] = useState(false);
+    const [openModal, setOpenModal] = useState(true);
 
     const { weatherInfo, setWeatherInfo } = useContext(WeatherContext);
 
@@ -79,6 +82,10 @@ export default function Welcome() {
                     </main>
                 </>
             </Layout>
+
+            <Modal isOpen={openModal}>
+                <QueriesHistory onClose={setOpenModal} />
+            </Modal>
         </>
     );
 }

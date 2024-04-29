@@ -11,3 +11,4 @@ export { default as IconChevronLeft } from "./chevronLeft";
 export { default as IconHistory } from "./history";
 export { default as IconQueries } from "./query";
 export { default as IconCompare } from "./compare";
+export { default as IconClose } from "./close";

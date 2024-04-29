@@ -36,8 +36,8 @@ export default function Sidebar({ open, sidebarOpen }) {
             className={`h-screen z-10 absolute shadow ${
                 !open ? "-translate-x-60" : ""
             }
-                transition-all
-            `}
+                transition-transform
+                           `}
         >
             <div className="h-full flex flex-col bg-white border-r shadow-sm justify-between">
                 <div className="flex p-4 pb-2 justify-between items-center border-b">
