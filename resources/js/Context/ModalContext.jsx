@@ -3,10 +3,12 @@ import { createContext, useState } from "react";
 export const ModalContext = createContext(null);
 
 const ModalProvider = ({ children }) => {
-    const [openModal, setOpenModal] = useState(false);
+    const [openHistoryModal, setOpenHistoryModal] = useState(false);
 
     return (
-        <ModalContext.Provider value={{ openModal, setOpenModal }}>
+        <ModalContext.Provider
+            value={{ openHistoryModal, setOpenHistoryModal }}
+        >
             {children}
         </ModalContext.Provider>
     );

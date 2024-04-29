@@ -6,14 +6,14 @@ import Sidebar from "@/Components/Sidebar";
 import { SidebarContext } from "@/Context/SidebarContext";
 
 export default function Layout({ children }) {
-    const { openSidebar, setOpenSidebar } = useContext(SidebarContext);
+    const { openSidebar } = useContext(SidebarContext);
 
     return (
         <>
             <div className="flex min-h-screen bg-sky-50 relative">
-                <Sidebar open={openSidebar} sidebarOpen={setOpenSidebar} />
+                <Sidebar open={openSidebar} />
                 <div className="flex flex-col justify-between w-full">
-                    <Header sidebarOpen={setOpenSidebar} />
+                    <Header />
 
                     <div>{children}</div>
 

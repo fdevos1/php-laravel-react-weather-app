@@ -13,8 +13,8 @@ import { WeatherContext } from "@/Context/WeatherContext";
 export default function Welcome() {
     const [loading, setLoading] = useState(false);
 
-    const { openModal } = useContext(ModalContext);
-    const { weatherInfo } = useContext(WeatherContext);
+    const { openHistoryModal } = useContext(ModalContext);
+    const { weatherInfo, setWeatherInfo } = useContext(WeatherContext);
 
     return (
         <>
@@ -79,7 +79,7 @@ export default function Welcome() {
                 </>
             </Layout>
 
-            <Modal isOpen={openModal}>
+            <Modal isOpen={openHistoryModal}>
                 <QueriesHistory />
             </Modal>
         </>

@@ -2,14 +2,16 @@ import Icon from "./icons/icon";
 import { useContext, useEffect, useRef } from "react";
 import { handleClickOutside } from "@/Hooks/detectOutsideClick";
 import { ModalContext } from "@/Context/ModalContext";
+import { SidebarContext } from "@/Context/SidebarContext";
 
-export default function Sidebar({ open, sidebarOpen }) {
+export default function Sidebar({ open }) {
     const ref = useRef();
 
-    const { setOpenModal } = useContext(ModalContext);
+    const { setOpenHistoryModal } = useContext(ModalContext);
+    const { setOpenSidebar } = useContext(SidebarContext);
 
     useEffect(() => {
-        const handleClick = handleClickOutside(ref, sidebarOpen);
+        const handleClick = handleClickOutside(ref, setOpenSidebar);
 
         document.addEventListener("mousedown", handleClick);
 
@@ -22,6 +24,7 @@ export default function Sidebar({ open, sidebarOpen }) {
         {
             icon: "history",
             title: "Histórico de consulta",
+            setState: setOpenHistoryModal,
         },
         {
             icon: "queries",
@@ -48,17 +51,20 @@ export default function Sidebar({ open, sidebarOpen }) {
                     <span className="text-xl">Clima e Tempo</span>
                     <button
                         className="flex h-6 w-4 justify-center items-center"
-                        onClick={() => sidebarOpen(false)}
+                        onClick={() => setOpenSidebar(false)}
                     >
                         <Icon name="chevron-left" />
                     </button>
                 </div>
 
                 <ul className="flex-1 px-3 mt-4">
-                    {items.map(({ icon, title }) => (
+                    {items.map(({ icon, title, setState }) => (
                         <li
                             className="flex items-center py-1 px-2 my-2 gap-4 font-medium rounded-md cursor-pointer   hover:bg-sky-300 hover:text-white"
-                            onClick={() => setOpenModal(true)}
+                            onClick={() => {
+                                setState(true);
+                                setOpenSidebar(false);
+                            }}
                         >
                             <Icon name={icon} />
                             <span>{title}</span>
