@@ -1,6 +1,20 @@
 import Icon from "./icons/icon";
+import { useEffect, useRef } from "react";
+import { handleClickOutside } from "@/Hooks/detectOutsideClick";
 
 export default function Sidebar({ open, sidebarOpen }) {
+    const ref = useRef();
+
+    useEffect(() => {
+        const handleClick = handleClickOutside(ref, sidebarOpen);
+
+        document.addEventListener("mousedown", handleClick);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClick);
+        };
+    }, [ref]);
+
     const items = [
         {
             icon: "history",
@@ -18,6 +32,7 @@ export default function Sidebar({ open, sidebarOpen }) {
 
     return (
         <aside
+            ref={ref}
             className={`h-screen z-10 absolute shadow ${
                 !open ? "-translate-x-60" : ""
             }
@@ -36,9 +51,9 @@ export default function Sidebar({ open, sidebarOpen }) {
                     </button>
                 </div>
 
-                <ul className="flex-1 px-3">
+                <ul className="flex-1 px-3 mt-4">
                     {items.map(({ icon, title }) => (
-                        <li className="flex items-center py-1 px-2 my-2 gap-4 font-medium rounded-md cursor-pointer  hover:bg-sky-300 hover:text-white ">
+                        <li className="flex items-center py-1 px-2 my-2 gap-4 font-medium rounded-md cursor-pointer   hover:bg-sky-300 hover:text-white ">
                             <Icon name={icon} />
                             <span>{title}</span>
                         </li>
