@@ -1,12 +1,16 @@
+import { useContext } from "react";
 import { useFormik } from "formik";
 
 import InputMask from "./InputMask";
 
-import handleCityQuery from "../Helpers/cityQuery";
-import { formValidation } from "../Helpers/schemaValidation";
+import handleCityQuery from "@/Helpers/cityQuery";
+import { formValidation } from "@/Helpers/schemaValidation";
 import { addToHistory } from "@/Helpers/localStorageHistory";
+import { WeatherContext } from "@/Context/WeatherContext";
 
-export default function Form({ setCurrentWeather, setLoading }) {
+export default function Form({ setLoading }) {
+    const { setWeatherInfo } = useContext(WeatherContext);
+
     let query = "";
     let response = {};
 
@@ -29,7 +33,7 @@ export default function Form({ setCurrentWeather, setLoading }) {
 
                 const { location, current } = cityQuery;
 
-                setCurrentWeather({ location, current });
+                setWeatherInfo({ location, current });
                 setTimeout(() => setLoading(false), 500);
             } catch (err) {
                 console.error(err);

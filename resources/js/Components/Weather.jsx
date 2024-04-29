@@ -38,7 +38,7 @@ export default function Weather({ weatherInfo }) {
                     <span>{current.weather_descriptions}</span>
                 </div>
 
-                <div className="grid grid-cols-2 auto-rows-auto px-2 gap-x-4 gap-y-2">
+                <div className="grid grid-cols-2 auto-rows-auto px-2 gap-x-4 gap-y-2 place-items-center">
                     <div className="flex flex-col gap-2 col-span-2 text-center">
                         <p>
                             {location.name}, {location.region},{" "}
@@ -51,7 +51,7 @@ export default function Weather({ weatherInfo }) {
                     </div>
 
                     {weatherItems.map((item) => (
-                        <div className="flex flex-col justify-between h-20 px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow">
+                        <div className="flex flex-col w-full justify-between h-20 px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow max-w-[200px]">
                             <div className="flex gap-2">
                                 {item.icon}
                                 <p className="uppercase text-xs truncate">
@@ -66,7 +66,7 @@ export default function Weather({ weatherInfo }) {
                         </div>
                     ))}
 
-                    <div className="col-span-2 flex flex-col justify-between h-auto px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow">
+                    <div className="col-span-2 flex flex-col justify-between h-auto px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow max-w-[350px] w-full">
                         <div className="flex gap-2 h-5 items-center">
                             <Icon name="wind" />
                             <p className="uppercase text-xs">Vento</p>

@@ -1,9 +1,12 @@
 import Icon from "./icons/icon";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { handleClickOutside } from "@/Hooks/detectOutsideClick";
+import { ModalContext } from "@/Context/ModalContext";
 
 export default function Sidebar({ open, sidebarOpen }) {
     const ref = useRef();
+
+    const { setOpenModal } = useContext(ModalContext);
 
     useEffect(() => {
         const handleClick = handleClickOutside(ref, sidebarOpen);
@@ -53,7 +56,10 @@ export default function Sidebar({ open, sidebarOpen }) {
 
                 <ul className="flex-1 px-3 mt-4">
                     {items.map(({ icon, title }) => (
-                        <li className="flex items-center py-1 px-2 my-2 gap-4 font-medium rounded-md cursor-pointer   hover:bg-sky-300 hover:text-white ">
+                        <li
+                            className="flex items-center py-1 px-2 my-2 gap-4 font-medium rounded-md cursor-pointer   hover:bg-sky-300 hover:text-white"
+                            onClick={() => setOpenModal(true)}
+                        >
                             <Icon name={icon} />
                             <span>{title}</span>
                         </li>

@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { retrieveHistory } from "@/Helpers/localStorageHistory";
 
 import Icon from "./icons/icon";
 import Weather from "./Weather";
+import { ModalContext } from "@/Context/ModalContext";
 
 export default function QueriesHistory({ onClose }) {
     const [queries, setQueries] = useState([]);
     const [selectedQuery, setSelectedQuery] = useState(undefined);
 
-    const handleClose = () => {
-        onClose(false);
-    };
+    const { setOpenModal } = useContext(ModalContext);
 
     const retrievedQueries = retrieveHistory();
 
@@ -24,8 +23,8 @@ export default function QueriesHistory({ onClose }) {
             <div className="flex flex-col h-[600px] w-full px-4 bg-white rounded gap-2">
                 <div className="flex w-full justify-between items-center pt-4">
                     <h3>Histórico de consultas</h3>
-                    <button>
-                        <Icon name="close" onCLick={handleClose} />
+                    <button onClick={() => setOpenModal(false)}>
+                        <Icon name="close" />
                     </button>
                 </div>
 

@@ -1,19 +1,20 @@
 import { useContext, useState } from "react";
 
-import { WeatherContext } from "@/Context/WeatherContext";
 import Layout from "@/Layouts/Layout";
+
 import Form from "@/Components/Form";
 import Weather from "@/Components/Weather";
 import Modal from "@/Components/Modal";
 import QueriesHistory from "@/Components/QueriesHistory";
 
+import { ModalContext } from "@/Context/ModalContext";
+import { WeatherContext } from "@/Context/WeatherContext";
+
 export default function Welcome() {
     const [loading, setLoading] = useState(false);
-    const [openModal, setOpenModal] = useState(true);
 
-    const { weatherInfo, setWeatherInfo } = useContext(WeatherContext);
-
-    console.log(weatherInfo);
+    const { openModal } = useContext(ModalContext);
+    const { weatherInfo } = useContext(WeatherContext);
 
     return (
         <>
@@ -33,7 +34,7 @@ export default function Welcome() {
                             <div className="flex w-full h-full items-center justify-center">
                                 {loading !== false ? (
                                     <>
-                                        <div className="h-10 w-10 border border-sky-500 rounded-full animate-spin"></div>
+                                        <div className="h-10 w-10 border border-sky-500 roundd-full animate-spin"></div>
                                     </>
                                 ) : (
                                     <>
@@ -67,12 +68,7 @@ export default function Welcome() {
                                             </div>
                                         ) : (
                                             <>
-                                                <Form
-                                                    setCurrentWeather={
-                                                        setWeatherInfo
-                                                    }
-                                                    setLoading={setLoading}
-                                                />
+                                                <Form setLoading={setLoading} />
                                             </>
                                         )}
                                     </>
@@ -84,7 +80,7 @@ export default function Welcome() {
             </Layout>
 
             <Modal isOpen={openModal}>
-                <QueriesHistory onClose={setOpenModal} />
+                <QueriesHistory />
             </Modal>
         </>
     );
