@@ -1,7 +1,7 @@
 import Icon from "./icons/icon";
 import Thermometer from "./Thermometer";
 
-const Weather = ({ weatherInfo }) => {
+export default function Weather({ weatherInfo }) {
     const { current, location } = weatherInfo;
 
     const weatherItems = [
@@ -96,6 +96,4 @@ const Weather = ({ weatherInfo }) => {
             </div>
         </>
     );
-};
-
-export default Weather;
+}

@@ -1,4 +1,4 @@
-const Thermometer = ({ value, type }) => {
+export default function Thermometer({ value, type }) {
     const coldColor =
         (value <= 15 && type == "temp") || (value <= 2 && type == "uv");
     const coolColor =
@@ -40,6 +40,4 @@ const Thermometer = ({ value, type }) => {
             ></div>
         </div>
     );
-};
-
-export default Thermometer;
+}

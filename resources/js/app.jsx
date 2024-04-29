@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import WeatherProvider from "./Context/WeatherContext";
+import SidebarProvider from "./Context/SidebarContext";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -20,7 +21,9 @@ createInertiaApp({
 
         root.render(
             <WeatherProvider>
-                <App {...props} />
+                <SidebarProvider>
+                    <App {...props} />
+                </SidebarProvider>
             </WeatherProvider>
         );
     },

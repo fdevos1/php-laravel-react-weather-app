@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-const InputMask = ({ ...props }) => {
+export default function InputMask({ ...props }) {
     const handleKeyUp = useCallback((e) => {
         e.currentTarget.maxLength = 9;
         let value = e.currentTarget.value;
@@ -15,6 +15,4 @@ const InputMask = ({ ...props }) => {
             <input {...props} onKeyUp={handleKeyUp} />
         </>
     );
-};
-
-export default InputMask;
+}

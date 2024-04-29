@@ -1,5 +1,4 @@
 import { useFormik } from "formik";
-import axios from "axios";
 
 import InputMask from "./InputMask";
 
@@ -7,7 +6,7 @@ import handleCityQuery from "../Helpers/cityQuery";
 import { formValidation } from "../Helpers/schemaValidation";
 import { addToHistory } from "@/Helpers/localStorageHistory";
 
-const Form = ({ setCurrentWeather, setLoading }) => {
+export default function Form({ setCurrentWeather, setLoading }) {
     let query = "";
     let response = {};
 
@@ -92,6 +91,4 @@ const Form = ({ setCurrentWeather, setLoading }) => {
             </div>
         </>
     );
-};
-
-export default Form;
+}

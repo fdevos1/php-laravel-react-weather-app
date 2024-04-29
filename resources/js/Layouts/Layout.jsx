@@ -1,15 +1,24 @@
+import { useContext, useState } from "react";
+
 import Footer from "@/Components/Footer";
 import Header from "@/Components/Header";
+import Sidebar from "@/Components/Sidebar";
+import { SidebarContext } from "@/Context/SidebarContext";
 
 export default function Layout({ children }) {
+    const { openSidebar, setOpenSidebar } = useContext(SidebarContext);
+
     return (
         <>
-            <div className="flex flex-col min-h-screen justify-between bg-sky-50">
-                <Header />
+            <div className="flex min-h-screen bg-sky-50 relative">
+                <Sidebar open={openSidebar} sidebarOpen={setOpenSidebar} />
+                <div className="flex flex-col justify-between w-full">
+                    <Header sidebarOpen={setOpenSidebar} />
 
-                <div>{children}</div>
+                    <div>{children}</div>
 
-                <Footer />
+                    <Footer />
+                </div>
             </div>
         </>
     );

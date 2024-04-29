@@ -6,3 +6,5 @@ export { default as IconUV } from "./uv";
 export { default as IconHumidity } from "./humidity";
 export { default as IconWind } from "./wind";
 export { default as IconClouds } from "./cloud";
+export { default as IconOptions } from "./options";
+export { default as IconChevronLeft } from "./chevronLeft";

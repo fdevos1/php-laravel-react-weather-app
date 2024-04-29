@@ -7,6 +7,8 @@ import {
     IconHumidity,
     IconWind,
     IconClouds,
+    IconOptions,
+    IconChevronLeft,
 } from ".";
 
 const Icon = ({ name }) => {
@@ -27,6 +29,10 @@ const Icon = ({ name }) => {
             return <IconWind />;
         case "cloud":
             return <IconClouds />;
+        case "options":
+            return <IconOptions />;
+        case "chevron-left":
+            return <IconChevronLeft />;
     }
 };
 
