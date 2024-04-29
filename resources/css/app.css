@@ -15,3 +15,15 @@ a {
         color: #06b6d4;
     }
 }
+
+#root,
+html {
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+section {
+    margin: 0 auto;
+    padding: 100px 0;
+    max-width: 1000px;
+}

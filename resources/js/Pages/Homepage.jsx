@@ -3,11 +3,14 @@ import { useContext, useState } from "react";
 import { WeatherContext } from "@/Context/WeatherContext";
 import Layout from "@/Layouts/Layout";
 import Form from "@/Components/Form";
+import Weather from "@/Components/Weather";
 
 export default function Welcome() {
     const [loading, setLoading] = useState(false);
 
     const { weatherInfo, setWeatherInfo } = useContext(WeatherContext);
+
+    console.log(weatherInfo);
 
     return (
         <>
@@ -31,14 +34,21 @@ export default function Welcome() {
                                     </>
                                 ) : (
                                     <>
-                                        <Form
-                                            setCurrentWeather={setWeatherInfo}
-                                            setLoading={setLoading}
-                                        />
                                         {weatherInfo !== undefined ? (
-                                            <div className="flex flex-col w-full h-full gap-2"></div>
+                                            <div className="flex flex-col w-full h-full gap-2">
+                                                <Weather
+                                                    weatherInfo={weatherInfo}
+                                                />
+                                            </div>
                                         ) : (
-                                            <></>
+                                            <>
+                                                <Form
+                                                    setCurrentWeather={
+                                                        setWeatherInfo
+                                                    }
+                                                    setLoading={setLoading}
+                                                />
+                                            </>
                                         )}
                                     </>
                                 )}
