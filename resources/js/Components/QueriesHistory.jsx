@@ -38,7 +38,10 @@ export default function QueriesHistory() {
                                 queries.map((item) => (
                                     <li
                                         onClick={() =>
-                                            setSelectedQuery(item.response)
+                                            setSelectedQuery({
+                                                location: item.location,
+                                                current: item.current,
+                                            })
                                         }
                                     >
                                         <div className="flex flex-col gap-2 border-y hover:bg-sky-300 hover:text-white cursor-pointer hover:font-semibold ">
@@ -48,8 +51,8 @@ export default function QueriesHistory() {
                                                 </span>
 
                                                 <span className="text-xs">
-                                                    {item.query.cep !== ""
-                                                        ? item.query.cep
+                                                    {item.cep !== ""
+                                                        ? item.cep
                                                         : "N/A"}
                                                 </span>
                                             </div>
@@ -59,7 +62,7 @@ export default function QueriesHistory() {
                                                 </span>
 
                                                 <span className="text-xs truncate">
-                                                    {item.query.cidade}
+                                                    {item.cidade}
                                                 </span>
                                             </div>
                                         </div>
@@ -70,7 +73,7 @@ export default function QueriesHistory() {
 
                     <div className="w-3/5 h-full">
                         {QUERY_IS_SELECTED ? (
-                            <Weather weatherInfo={selectedQuery} />
+                            <Weather weatherInfo={selectedQuery} size="base" />
                         ) : (
                             <></>
                         )}

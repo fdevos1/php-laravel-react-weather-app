@@ -16,9 +16,6 @@ export default function Form({ type }) {
         setLoading,
     } = useContext(WeatherContext);
 
-    let query = "";
-    let response = {};
-
     const formikProps = useFormik({
         initialValues: {
             cep: "",
@@ -31,12 +28,9 @@ export default function Form({ type }) {
 
             try {
                 const cityQuery = await handleCityQuery({ cidade });
-                query = data;
-                response = cityQuery;
-
-                addToHistory(query, response);
 
                 const { location, current } = cityQuery;
+                addToHistory(cep, cidade, location, current);
 
                 if (type === "comparision-query") {
                     setComparisionWeatherInfo({ location, current });
@@ -58,10 +52,13 @@ export default function Form({ type }) {
 
     const handleBlurOnCEP = async (e) => {
         let { value } = e.target;
+
         value = value.replace(/\D/g, "");
 
         try {
             await formValidation.validateAt("cep", { cep: value });
+
+            console.log(value);
 
             const fetchCity = await fetch(
                 `http://viacep.com.br/ws/${value}/json/`

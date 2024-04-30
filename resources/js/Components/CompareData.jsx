@@ -8,8 +8,8 @@ import Form from "./Form";
 import { ModalContext } from "@/Context/ModalContext";
 import { WeatherContext } from "@/Context/WeatherContext";
 
-export default function CompareData() {
-    const [queries, setQueries] = useState([]);
+export default function CompareData({ savedQueries }) {
+    const [historyQueries, setHistoryQueries] = useState([]);
 
     const { setOpenModal } = useContext(ModalContext);
     const {
@@ -21,19 +21,33 @@ export default function CompareData() {
     } = useContext(WeatherContext);
 
     const retrievedQueries = retrieveHistory();
+    const { data } = savedQueries;
 
-    const isEqual =
+    const IS_EQUAL =
         JSON.stringify(selectedWeatherInfo) ===
         JSON.stringify(comparisionWeatherInfo);
 
     useEffect(() => {
-        setQueries(retrievedQueries);
+        setHistoryQueries(retrievedQueries);
 
-        if (isEqual) {
+        if (IS_EQUAL) {
             setSelectedWeatherInfo(undefined);
             setComparisionWeatherInfo(undefined);
         }
-    }, [isEqual]);
+    }, [IS_EQUAL]);
+
+    const queriesLists = [
+        {
+            title: "Histórico de consultas",
+            content: historyQueries,
+        },
+        {
+            title: "Consultas salvas",
+            content: data,
+        },
+    ];
+
+    console.log(comparisionWeatherInfo, selectedWeatherInfo);
 
     return (
         <>
@@ -59,71 +73,92 @@ export default function CompareData() {
                 </div>
 
                 <div className="flex w-full h-full overflow-auto">
-                    <div className="w-2/5 border-r h-full pr-2">
-                        <ul>
-                            <p>Consultas</p>
-                            {queries &&
-                                queries.map((item) => (
-                                    <li>
-                                        <div className="flex flex-col gap-2 border-y hover:bg-sky-300 hover:text-white cursor-pointer hover:font-semibold py-1">
-                                            <div className="flex gap-1 items-center">
-                                                <span className="text-xs">
-                                                    CEP:
-                                                </span>
+                    <div className="w-2/5 h-full border-r pr-2 overflow-auto max-w-52 min-w-36">
+                        {queriesLists &&
+                            queriesLists.map(({ title, content }) => {
+                                return (
+                                    <ul className="h-1/2">
+                                        <p className="border-b text-xs">
+                                            {title}
+                                        </p>
 
-                                                <span className="text-sm">
-                                                    {item.query.cep !== ""
-                                                        ? item.query.cep
-                                                        : "N/A"}
-                                                </span>
-                                            </div>
-                                            <div className="flex gap-1 items-center">
-                                                <span className="text-xs">
-                                                    Cidade:
-                                                </span>
+                                        {content &&
+                                            content.map((item) => (
+                                                <li>
+                                                    <div className="flex flex-col gap-2 border-y hover:bg-sky-300 hover:text-white cursor-pointer hover:font-semibold py-1">
+                                                        <div className="flex gap-1 items-center">
+                                                            <span className="text-xs">
+                                                                CEP:
+                                                            </span>
 
-                                                <span className="text-sm truncate ">
-                                                    {item.query.cidade}
-                                                </span>
-                                            </div>
+                                                            <span className="text-sm">
+                                                                {item.cep !== ""
+                                                                    ? item.cep
+                                                                    : "N/A"}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex gap-1 items-center">
+                                                            <span className="text-xs">
+                                                                Cidade:
+                                                            </span>
 
-                                            <div className="flex justify-center ">
-                                                {selectedWeatherInfo !==
-                                                undefined ? (
-                                                    <button
-                                                        className="text-sm bg-sky-600 rounded px-2 text-white font-bold"
-                                                        onClick={() =>
-                                                            setComparisionWeatherInfo(
-                                                                item.response
-                                                            )
-                                                        }
-                                                    >
-                                                        Comparar
-                                                    </button>
-                                                ) : (
-                                                    <button
-                                                        className="text-sm bg-sky-500 rounded px-2 text-white"
-                                                        onClick={() =>
-                                                            setSelectedWeatherInfo(
-                                                                item.response
-                                                            )
-                                                        }
-                                                    >
-                                                        Selecionar
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </li>
-                                ))}
-                        </ul>
+                                                            <span className="text-sm truncate ">
+                                                                {item.cidade}
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="flex justify-center ">
+                                                            {selectedWeatherInfo !==
+                                                            undefined ? (
+                                                                <button
+                                                                    className="text-sm bg-sky-600 rounded px-2 text-white font-bold"
+                                                                    onClick={() =>
+                                                                        setComparisionWeatherInfo(
+                                                                            {
+                                                                                location:
+                                                                                    item.location,
+                                                                                current:
+                                                                                    item.current,
+                                                                            }
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Comparar
+                                                                </button>
+                                                            ) : (
+                                                                <button
+                                                                    className="text-sm bg-sky-500 rounded px-2 text-white"
+                                                                    onClick={() =>
+                                                                        setSelectedWeatherInfo(
+                                                                            {
+                                                                                location:
+                                                                                    item.location,
+                                                                                current:
+                                                                                    item.current,
+                                                                            }
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Selecionar
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            ))}
+                                    </ul>
+                                );
+                            })}
                     </div>
 
-                    <div className="w-3/5 h-full overflow-auto pb-2">
+                    <div className="w-full h-full overflow-auto pb-2 ">
                         {selectedWeatherInfo !== undefined &&
                         comparisionWeatherInfo === undefined ? (
                             <div className="flex flex-col gap-2 ">
-                                <Weather weatherInfo={selectedWeatherInfo} />
+                                <Weather
+                                    weatherInfo={selectedWeatherInfo}
+                                    size="base"
+                                />
 
                                 <span className="text-sm text-center text-neutral-500">
                                     Selecione outra consulta ou consulte abaixo
@@ -133,17 +168,19 @@ export default function CompareData() {
                             </div>
                         ) : selectedWeatherInfo !== undefined &&
                           comparisionWeatherInfo !== undefined &&
-                          !isEqual ? (
+                          !IS_EQUAL ? (
                             <div className="flex flex-col gap-4  items-center">
                                 <div className="h-full">
                                     <Weather
                                         weatherInfo={selectedWeatherInfo}
+                                        size="base"
                                     />
                                 </div>
                                 <div className="w-4/5 border border-neutral-400" />
                                 <div className="h-full">
                                     <Weather
                                         weatherInfo={comparisionWeatherInfo}
+                                        size="base"
                                     />
                                 </div>
                             </div>

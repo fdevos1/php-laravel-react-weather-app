@@ -33,8 +33,6 @@ export default function Homepage({ queries }) {
     const SAVED_QUERIES_MODAL_OPEN = activeModal === 1;
     const COMPARE_QUERIES_MODAL_OPEN = activeModal === 2;
 
-    console.log(activeModal);
-
     useEffect(() => {
         if (weatherInfo !== undefined) {
             const { current, location, cep, cidade } = weatherInfo;
@@ -143,7 +141,7 @@ export default function Homepage({ queries }) {
                 ) : SAVED_QUERIES_MODAL_OPEN ? (
                     <SavedQueries queries={queries} />
                 ) : COMPARE_QUERIES_MODAL_OPEN ? (
-                    <CompareData />
+                    <CompareData savedQueries={queries} />
                 ) : (
                     <></>
                 )}

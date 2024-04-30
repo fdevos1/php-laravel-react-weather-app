@@ -68,7 +68,7 @@ export default function SavedQueries({ queries }) {
 
                     <div className="w-3/5 h-full">
                         {QUERY_IS_SELECTED ? (
-                            <Weather weatherInfo={selectedQuery} />
+                            <Weather weatherInfo={selectedQuery} size="base" />
                         ) : (
                             <></>
                         )}

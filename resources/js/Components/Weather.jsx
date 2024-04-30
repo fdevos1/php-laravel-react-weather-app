@@ -1,7 +1,7 @@
 import Icon from "./icons/icon";
 import Thermometer from "./Thermometer";
 
-export default function Weather({ weatherInfo }) {
+export default function Weather({ weatherInfo, size }) {
     const { current, location } = weatherInfo;
 
     const weatherItems = [
@@ -62,7 +62,11 @@ export default function Weather({ weatherInfo }) {
                                 </p>
                             </div>
 
-                            <span className="text-3xl text-center text-neutral-100 drop-shadow">
+                            <span
+                                className={`${
+                                    size === "base" ? "text-xl  " : "text-3xl"
+                                } text-center text-neutral-100 drop-shadow`}
+                            >
                                 {item.content}
                             </span>
                             {item.component && item.component}
@@ -80,7 +84,13 @@ export default function Weather({ weatherInfo }) {
                                 <p className="uppercase text-xs">
                                     Velocidade do vento
                                 </p>
-                                <span className="text-lg text-center text-neutral-100 drop-shadow">
+                                <span
+                                    className={`${
+                                        size === "base"
+                                            ? "text-sm  "
+                                            : "text-3xl"
+                                    }text-lg text-center text-neutral-100 drop-shadow`}
+                                >
                                     {current.wind_speed}Km/h
                                 </span>
                             </div>
@@ -88,7 +98,13 @@ export default function Weather({ weatherInfo }) {
                                 <p className="uppercase text-xs">
                                     Direção do vento
                                 </p>
-                                <span className="text-lg text-center text-neutral-100 drop-shadow">
+                                <span
+                                    className={`${
+                                        size === "base"
+                                            ? "text-sm  "
+                                            : "text-3xl"
+                                    }text-lg text-center text-neutral-100 drop-shadow`}
+                                >
                                     {current.wind_degree}&deg; -{" "}
                                     {current.wind_dir}
                                 </span>
