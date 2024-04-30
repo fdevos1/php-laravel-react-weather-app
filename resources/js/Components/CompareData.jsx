@@ -73,14 +73,14 @@ export default function CompareData({ savedQueries }) {
                 </div>
 
                 <div className="flex w-full h-full overflow-auto">
-                    <div className="w-2/5 h-full border-r pr-2 overflow-auto max-w-52 min-w-36">
+                    <div className="w-2/5 h-full flex flex-col gap-2 border-r max-w-52 min-w-36 px-[1px]">
                         {queriesLists &&
                             queriesLists.map(({ title, content }) => {
                                 return (
-                                    <ul className="h-1/2">
-                                        <p className="border-b text-xs">
-                                            {title}
-                                        </p>
+                                    <ul className="h-1/2 overflow-auto ">
+                                        <div className="text-xs bg-white sticky top-0 py-1">
+                                            <p>{title}</p>
+                                        </div>
 
                                         {content &&
                                             content.map((item) => (

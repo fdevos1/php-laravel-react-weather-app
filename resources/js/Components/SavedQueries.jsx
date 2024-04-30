@@ -27,7 +27,7 @@ export default function SavedQueries({ queries }) {
 
                 <div className="flex w-full h-full">
                     <div className="w-2/5 border-r h-full pr-2">
-                        <ul>
+                        <ul className="overflow-auto">
                             <p>Consulta salvas</p>
                             {data &&
                                 data.map((item) => (

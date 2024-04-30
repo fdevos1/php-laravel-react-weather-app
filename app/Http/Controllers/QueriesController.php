@@ -39,6 +39,14 @@ class QueriesController extends Controller
     // Obter todos os dados da requisição
     $data = $request->all();
 
+    $query = Queries::query();
+
+    $sortField = request("sort_field", 'created_at');
+    $sortDirection = request("sort_direction", "desc");
+
+    $queries = $query->orderBy($sortField, $sortDirection)->paginate(10);
+
+
     
 
     $data['location'] = json_encode($data['location']);
@@ -47,11 +55,23 @@ class QueriesController extends Controller
     
     // Exibir os dados recebidos do frontend
     // dd($data);
+    
+    try {        
         Queries::create($data);
 
+       return Inertia::render('Homepage', [
+        'message' => 'consulta salva',
+        'status' => 200,
+        'queries' => $queries
+
+       ]);
+    } catch (\Exception $e) {
         return Inertia::render('Homepage', [
-            'message' => "Consulta salva com sucesso",
+            'message' => 'erro ao criar consulta',
+            'status' => 400,
+            'erro' => $e
         ]);
+    }
     }
 
     /**

@@ -32,7 +32,7 @@ export default function QueriesHistory() {
 
                 <div className="flex w-full h-full">
                     <div className="w-2/5 border-r h-full pr-2">
-                        <ul>
+                        <ul className="overflow-auto">
                             <p>Consulta</p>
                             {queries &&
                                 queries.map((item) => (

@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import Layout from "@/Layouts/Layout";
 
@@ -13,8 +14,12 @@ import { WeatherContext } from "@/Context/WeatherContext";
 
 import { useForm } from "@inertiajs/react";
 import SavedQueries from "@/Components/SavedQueries";
+import Toastify from "@/Components/Toastify";
 
-export default function Homepage({ queries }) {
+export default function Homepage({ queries, status }) {
+    const createdNotify = () => toast.success("Consulta salva com sucesso");
+    const errorNotify = () => toast.error("Erro ao salvar consulta");
+
     const { openModal, setOpenModal, setActiveModal, activeModal } =
         useContext(ModalContext);
     const {
@@ -50,6 +55,10 @@ export default function Homepage({ queries }) {
         e.preventDefault();
 
         post(route("store"));
+
+        if (status === 200) {
+            createdNotify();
+        }
     };
 
     return (
@@ -146,6 +155,8 @@ export default function Homepage({ queries }) {
                     <></>
                 )}
             </Modal>
+
+            <Toastify />
         </>
     );
 }
