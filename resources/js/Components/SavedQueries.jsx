@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { ModalContext } from "@/Context/ModalContext";
 import Icon from "./icons/icon";
-import Weather from "./Weather";
+import Weather from "./WeatherInfos";
 
 export default function SavedQueries({ queries }) {
     const [selectedQuery, setSelectedQuery] = useState(undefined);

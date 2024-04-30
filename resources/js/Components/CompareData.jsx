@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { retrieveHistory } from "@/Helpers/localStorageHistory";
 
 import Icon from "./icons/icon";
-import Weather from "./Weather";
+import Weather from "./WeatherInfos";
 import Form from "./Form";
 import { ModalContext } from "@/Context/ModalContext";
 import { WeatherContext } from "@/Context/WeatherContext";

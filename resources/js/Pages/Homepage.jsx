@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Layout from "@/Layouts/Layout";
 
 import Form from "@/Components/Form";
-import Weather from "@/Components/Weather";
+import Weather from "@/Components/WeatherInfos";
 import Modal from "@/Components/Modal";
 import QueriesHistory from "@/Components/QueriesHistory";
 import CompareData from "@/Components/CompareData";
