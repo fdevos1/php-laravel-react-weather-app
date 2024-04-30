@@ -1,3 +1,4 @@
+import Input from "./Input";
 import { useCallback } from "react";
 
 export default function InputMask({ ...props }) {
@@ -12,7 +13,7 @@ export default function InputMask({ ...props }) {
 
     return (
         <>
-            <input {...props} onKeyUp={handleKeyUp} />
+            <Input {...props} onKeyUp={handleKeyUp} />
         </>
     );
 }

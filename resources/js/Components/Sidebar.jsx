@@ -60,8 +60,9 @@ export default function Sidebar({ open }) {
                 </div>
 
                 <ul className="flex-1 px-3 mt-4">
-                    {items.map(({ icon, title, active }) => (
+                    {items.map(({ icon, title, active }, i) => (
                         <li
+                            key={i}
                             className="flex items-center py-1 px-2 my-2 gap-4 font-medium rounded-md cursor-pointer   hover:bg-sky-300 hover:text-white"
                             onClick={() => {
                                 setOpenModal(true);

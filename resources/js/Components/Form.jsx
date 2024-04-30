@@ -1,14 +1,17 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useFormik } from "formik";
 
-import InputMask from "./InputMask";
-
-import handleCityQuery from "@/Helpers/cityQuery";
+import { handleCityQuery } from "@/Helpers/cityQuery";
 import { formValidation } from "@/Helpers/schemaValidation";
 import { addToHistory } from "@/Helpers/localStorageHistory";
 import { WeatherContext } from "@/Context/WeatherContext";
 
-export default function Form({ type }) {
+import Input from "./Input";
+import InputMask from "./InputMask";
+import Button from "./Button";
+import FormError from "./FormError";
+
+export default function Form({ isModal, component }) {
     const {
         setWeatherInfo,
         setComparisionWeatherInfo,
@@ -32,11 +35,11 @@ export default function Form({ type }) {
                 const { location, current } = cityQuery;
                 addToHistory(cep, cidade, location, current);
 
-                if (type === "comparision-query") {
+                if (component === "comparision-query") {
                     setComparisionWeatherInfo({ location, current });
                 }
 
-                if (type === "query-small") {
+                if (component === "query-small") {
                     setSelectedWeatherInfo({ location, current });
                 }
 
@@ -56,10 +59,6 @@ export default function Form({ type }) {
         value = value.replace(/\D/g, "");
 
         try {
-            await formValidation.validateAt("cep", { cep: value });
-
-            console.log(value);
-
             const fetchCity = await fetch(
                 `http://viacep.com.br/ws/${value}/json/`
             );
@@ -73,6 +72,32 @@ export default function Form({ type }) {
         }
     };
 
+    const inputLists = [
+        {
+            component: (
+                <InputMask
+                    placeholder="Insira o CEP desejado"
+                    name="cep"
+                    value={formikProps.values.cep}
+                    onChange={formikProps.handleChange}
+                    onBlur={handleBlurOnCEP}
+                />
+            ),
+            error: formikProps.errors.cep,
+        },
+        {
+            component: (
+                <Input
+                    placeholder="Ou cidade desejada"
+                    name="cidade"
+                    value={formikProps.values.cidade}
+                    onChange={formikProps.handleChange}
+                />
+            ),
+            error: formikProps.errors.cidade,
+        },
+    ];
+
     return (
         <>
             <div className="flex  justify-between items-center p-4">
@@ -81,44 +106,19 @@ export default function Form({ type }) {
                         <div
                             className={` flex flex-col
                             w-full
-                           
-                            gap-2 ${
-                                type === "comparision-query" ||
-                                type === "query-small"
-                                    ? "items-start"
-                                    : "items-center"
-                            }`}
+                            gap-2 ${isModal ? "items-start" : "items-center"}`}
                         >
-                            <InputMask
-                                className={`${
-                                    type === "comparision-query" ||
-                                    type === "query-small"
-                                        ? "max-w-44"
-                                        : ""
-                                }`}
-                                placeholder="Insira o CEP desejado"
-                                name="cep"
-                                value={formikProps.values.cep}
-                                onChange={formikProps.handleChange}
-                                onBlur={handleBlurOnCEP}
-                            />
-                            <p className="self-center">Ou</p>
-                            <input
-                                className={`${
-                                    type === "comparision-query" ||
-                                    type === "query-small"
-                                        ? "max-w-44"
-                                        : ""
-                                }`}
-                                placeholder="A cidade desejada"
-                                name="cidade"
-                                value={formikProps.values.cidade}
-                                onChange={formikProps.handleChange}
-                            />
+                            {inputLists.map(({ component, error }, i) => (
+                                <div
+                                    className="flex flex-col min-h-16 justify-between"
+                                    key={i}
+                                >
+                                    {component}
+                                    {error && <FormError error={error} />}
+                                </div>
+                            ))}
                         </div>
-                        <button className="border border-sky-500 rounded px-4 ">
-                            Consultar
-                        </button>
+                        <Button text="buscar" />
                     </div>
                 </form>
             </div>

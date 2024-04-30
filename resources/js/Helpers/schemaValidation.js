@@ -1,5 +1,5 @@
 import * as yup from "yup";
 
 export let formValidation = yup.object().shape({
-    cep: yup.string(),
+    cidade: yup.string().required("Digite a cidade desejada"),
 });
