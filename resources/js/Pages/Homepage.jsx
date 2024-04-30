@@ -59,6 +59,8 @@ export default function Homepage({ queries, status }) {
         if (status === 200) {
             createdNotify();
         }
+
+        errorNotify();
     };
 
     return (

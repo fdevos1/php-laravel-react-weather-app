@@ -118,7 +118,7 @@ export default function Form({ isModal, component }) {
                                 </div>
                             ))}
                         </div>
-                        <Button text="buscar" />
+                        <Button text="buscar" color="sky" />
                     </div>
                 </form>
             </div>
