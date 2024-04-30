@@ -4,7 +4,7 @@ import WeatherWindBox from "./WeatherWindBox";
 import Thermometer from "./Thermometer";
 import WeatherMainInfos from "./WeatherMainInfos";
 
-export default function WeatherContent({ weatherInfo }) {
+export default function Weather({ weatherInfo, isModal }) {
     const { current, location } = weatherInfo;
 
     const weatherBox = [
@@ -46,16 +46,18 @@ export default function WeatherContent({ weatherInfo }) {
                         country={location.country}
                         name={location.name}
                         region={location.region}
-                        temp={location.temperature}
+                        temp={current.temperature}
                     />
 
                     {weatherBox.map(
                         ({ title, icon, content, component }, i) => (
                             <WeatherBox
+                                key={i}
                                 title={title}
                                 icon={icon}
                                 content={content}
                                 component={component}
+                                isModal
                             />
                         )
                     )}
@@ -64,6 +66,7 @@ export default function WeatherContent({ weatherInfo }) {
                         wind_degree={current.wind_degree}
                         wind_dir={current.wind_dir}
                         wind_speed={current.wind_speed}
+                        isModal
                     />
                 </div>
             </div>

@@ -4,7 +4,7 @@ export default function WeatherWindBox({
     wind_speed,
     wind_degree,
     wind_dir,
-    size,
+    isModal,
 }) {
     return (
         <div className="col-span-2 flex flex-col justify-between h-auto px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow w-full">
@@ -18,7 +18,7 @@ export default function WeatherWindBox({
                     <p className="uppercase text-xs">Velocidade do vento</p>
                     <span
                         className={`${
-                            size === "base" ? "text-sm  " : "text-3xl"
+                            isModal ? "text-sm text-nowrap" : "text-3xl"
                         }text-lg text-center text-neutral-100 drop-shadow`}
                     >
                         {wind_speed}Km/h
@@ -28,7 +28,7 @@ export default function WeatherWindBox({
                     <p className="uppercase text-xs">Direção do vento</p>
                     <span
                         className={`${
-                            size === "base" ? "text-sm  " : "text-3xl"
+                            isModal ? "text-sm  " : "text-3xl"
                         }text-lg text-center text-neutral-100 drop-shadow`}
                     >
                         {wind_degree}&deg; - {wind_dir}

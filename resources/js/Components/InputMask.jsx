@@ -1,7 +1,7 @@
 import Input from "./Input";
 import { useCallback } from "react";
 
-export default function InputMask({ ...props }) {
+export default function InputMask({ isModal, ...props }) {
     const handleKeyUp = useCallback((e) => {
         e.currentTarget.maxLength = 9;
         let value = e.currentTarget.value;
@@ -13,7 +13,7 @@ export default function InputMask({ ...props }) {
 
     return (
         <>
-            <Input {...props} onKeyUp={handleKeyUp} />
+            <Input isModal={isModal} {...props} onKeyUp={handleKeyUp} />
         </>
     );
 }

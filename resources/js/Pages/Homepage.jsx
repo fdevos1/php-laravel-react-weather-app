@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import Layout from "@/Layouts/Layout";
@@ -6,19 +6,25 @@ import Layout from "@/Layouts/Layout";
 import Form from "@/Components/Form";
 import Weather from "@/Components/WeatherInfos";
 import Modal from "@/Components/Modal";
-import QueriesHistory from "@/Components/QueriesHistory";
-import CompareData from "@/Components/CompareData";
 
 import { ModalContext } from "@/Context/ModalContext";
 import { WeatherContext } from "@/Context/WeatherContext";
 
 import { useForm } from "@inertiajs/react";
-import SavedQueries from "@/Components/SavedQueries";
 import Toastify from "@/Components/Toastify";
+import QueriesModal from "@/Components/QueriesModal";
+import { retrieveHistory } from "@/Helpers/localStorageHistory";
+import CompareDataModal from "@/Components/CompareDataModal";
 
 export default function Homepage({ queries, status }) {
+    const [retrievedQueries, setRetrievedQueries] = useState([]);
+
+    const { data } = queries;
+
     const createdNotify = () => toast.success("Consulta salva com sucesso");
     const errorNotify = () => toast.error("Erro ao salvar consulta");
+
+    const retrieveLocalQueries = retrieveHistory();
 
     const { openModal, setOpenModal, setActiveModal, activeModal } =
         useContext(ModalContext);
@@ -39,6 +45,8 @@ export default function Homepage({ queries, status }) {
     const COMPARE_QUERIES_MODAL_OPEN = activeModal === 2;
 
     useEffect(() => {
+        setRetrievedQueries(retrieveLocalQueries);
+
         if (weatherInfo !== undefined) {
             const { current, location, cep, cidade } = weatherInfo;
 
@@ -135,7 +143,7 @@ export default function Homepage({ queries, status }) {
                                             </form>
                                         ) : (
                                             <>
-                                                <Form type="query" />
+                                                <Form isModal={false} />
                                             </>
                                         )}
                                     </>
@@ -148,11 +156,22 @@ export default function Homepage({ queries, status }) {
 
             <Modal isOpen={openModal}>
                 {HISTORY_MODAL_OPEN ? (
-                    <QueriesHistory />
+                    <QueriesModal
+                        content={retrievedQueries}
+                        listTitle={"Consultas"}
+                        title={"Histórico de consultas"}
+                    />
                 ) : SAVED_QUERIES_MODAL_OPEN ? (
-                    <SavedQueries queries={queries} />
+                    <QueriesModal
+                        content={data}
+                        listTitle={"Consultas"}
+                        title={"Consultas salvas"}
+                    />
                 ) : COMPARE_QUERIES_MODAL_OPEN ? (
-                    <CompareData savedQueries={queries} />
+                    <CompareDataModal
+                        retrievedQueries={retrievedQueries}
+                        savedQueries={data}
+                    />
                 ) : (
                     <></>
                 )}

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useFormik } from "formik";
 
 import { handleCityQuery } from "@/Helpers/cityQuery";
@@ -12,6 +12,8 @@ import Button from "./Button";
 import FormError from "./FormError";
 
 export default function Form({ isModal, component }) {
+    console.log(isModal);
+
     const {
         setWeatherInfo,
         setComparisionWeatherInfo,
@@ -81,6 +83,7 @@ export default function Form({ isModal, component }) {
                     value={formikProps.values.cep}
                     onChange={formikProps.handleChange}
                     onBlur={handleBlurOnCEP}
+                    isModal={isModal}
                 />
             ),
             error: formikProps.errors.cep,
@@ -92,6 +95,7 @@ export default function Form({ isModal, component }) {
                     name="cidade"
                     value={formikProps.values.cidade}
                     onChange={formikProps.handleChange}
+                    isModal={isModal}
                 />
             ),
             error: formikProps.errors.cidade,
@@ -118,7 +122,7 @@ export default function Form({ isModal, component }) {
                                 </div>
                             ))}
                         </div>
-                        <Button text="buscar" color="sky" />
+                        <Button text="buscar" color="blue" />
                     </div>
                 </form>
             </div>

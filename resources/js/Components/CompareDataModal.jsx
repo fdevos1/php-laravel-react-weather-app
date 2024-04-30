@@ -1,16 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
-import { retrieveHistory } from "@/Helpers/localStorageHistory";
+import { ModalContext } from "@/Context/ModalContext";
+import { WeatherContext } from "@/Context/WeatherContext";
 
 import Icon from "./icons/icon";
 import Weather from "./WeatherInfos";
 import Form from "./Form";
-import { ModalContext } from "@/Context/ModalContext";
-import { WeatherContext } from "@/Context/WeatherContext";
+import Button from "./Button";
 
-export default function CompareData({ savedQueries }) {
-    const [historyQueries, setHistoryQueries] = useState([]);
-
+export default function CompareDataModal({ retrievedQueries, savedQueries }) {
     const { setOpenModal } = useContext(ModalContext);
     const {
         selectedWeatherInfo,
@@ -20,16 +18,16 @@ export default function CompareData({ savedQueries }) {
         setWeatherInfo,
     } = useContext(WeatherContext);
 
-    const retrievedQueries = retrieveHistory();
-    const { data } = savedQueries;
-
     const IS_EQUAL =
         JSON.stringify(selectedWeatherInfo) ===
         JSON.stringify(comparisionWeatherInfo);
 
-    useEffect(() => {
-        setHistoryQueries(retrievedQueries);
+    const WEATHER_IS_SELECTED = selectedWeatherInfo !== undefined;
+    const COMPARE_WEATHER_IS_SELECETD = comparisionWeatherInfo !== undefined;
+    const COMPARE_WEATHER_IS_NOT_SELECTED =
+        comparisionWeatherInfo === undefined;
 
+    useEffect(() => {
         if (IS_EQUAL) {
             setSelectedWeatherInfo(undefined);
             setComparisionWeatherInfo(undefined);
@@ -39,15 +37,13 @@ export default function CompareData({ savedQueries }) {
     const queriesLists = [
         {
             title: "Histórico de consultas",
-            content: historyQueries,
+            content: retrievedQueries,
         },
         {
             title: "Consultas salvas",
-            content: data,
+            content: savedQueries,
         },
     ];
-
-    console.log(comparisionWeatherInfo, selectedWeatherInfo);
 
     return (
         <>
@@ -60,16 +56,15 @@ export default function CompareData({ savedQueries }) {
                 </div>
 
                 <div>
-                    <button
-                        className="text-sm bg-sky-600 rounded px-2 text-white font-bold"
-                        onClick={() => {
+                    <Button
+                        text="Nova comparação"
+                        color="blue"
+                        action={() => {
                             setWeatherInfo(undefined);
                             setSelectedWeatherInfo(undefined);
                             setComparisionWeatherInfo(undefined);
                         }}
-                    >
-                        Nova comparação
-                    </button>
+                    />
                 </div>
 
                 <div className="flex w-full h-full overflow-auto">
@@ -78,14 +73,14 @@ export default function CompareData({ savedQueries }) {
                             queriesLists.map(({ title, content }) => {
                                 return (
                                     <ul className="h-1/2 overflow-auto ">
-                                        <div className="text-xs bg-white sticky top-0 py-1">
+                                        <div className="text-xs bg-white font-semibold sticky top-0 py-1">
                                             <p>{title}</p>
                                         </div>
 
                                         {content &&
                                             content.map((item) => (
                                                 <li>
-                                                    <div className="flex flex-col gap-2 border-y hover:bg-sky-300 hover:text-white cursor-pointer hover:font-semibold py-1">
+                                                    <div className="flex flex-col gap-2 border-y hover:bg-sky-100  cursor-pointer  py-1 transition-colors">
                                                         <div className="flex gap-1 items-center">
                                                             <span className="text-xs">
                                                                 CEP:
@@ -108,11 +103,11 @@ export default function CompareData({ savedQueries }) {
                                                         </div>
 
                                                         <div className="flex justify-center ">
-                                                            {selectedWeatherInfo !==
-                                                            undefined ? (
-                                                                <button
-                                                                    className="text-sm bg-sky-600 rounded px-2 text-white font-bold"
-                                                                    onClick={() =>
+                                                            {WEATHER_IS_SELECTED ? (
+                                                                <Button
+                                                                    text="Comparar"
+                                                                    color="sky"
+                                                                    action={() =>
                                                                         setComparisionWeatherInfo(
                                                                             {
                                                                                 location:
@@ -122,13 +117,12 @@ export default function CompareData({ savedQueries }) {
                                                                             }
                                                                         )
                                                                     }
-                                                                >
-                                                                    Comparar
-                                                                </button>
+                                                                />
                                                             ) : (
-                                                                <button
-                                                                    className="text-sm bg-sky-500 rounded px-2 text-white"
-                                                                    onClick={() =>
+                                                                <Button
+                                                                    text="Selecionar"
+                                                                    color="blue"
+                                                                    action={() =>
                                                                         setSelectedWeatherInfo(
                                                                             {
                                                                                 location:
@@ -138,9 +132,7 @@ export default function CompareData({ savedQueries }) {
                                                                             }
                                                                         )
                                                                     }
-                                                                >
-                                                                    Selecionar
-                                                                </button>
+                                                                />
                                                             )}
                                                         </div>
                                                     </div>
@@ -152,41 +144,43 @@ export default function CompareData({ savedQueries }) {
                     </div>
 
                     <div className="w-full h-full overflow-auto pb-2 ">
-                        {selectedWeatherInfo !== undefined &&
-                        comparisionWeatherInfo === undefined ? (
-                            <div className="flex flex-col gap-2 ">
+                        {WEATHER_IS_SELECTED &&
+                        COMPARE_WEATHER_IS_NOT_SELECTED ? (
+                            <div className="flex flex-col gap-2 items-center ">
                                 <Weather
                                     weatherInfo={selectedWeatherInfo}
-                                    size="base"
+                                    isModal
                                 />
 
                                 <span className="text-sm text-center text-neutral-500">
                                     Selecione outra consulta ou consulte abaixo
                                 </span>
 
-                                <Form type="comparision-query" />
+                                <Form isModal={true} />
                             </div>
-                        ) : selectedWeatherInfo !== undefined &&
-                          comparisionWeatherInfo !== undefined &&
+                        ) : WEATHER_IS_SELECTED &&
+                          COMPARE_WEATHER_IS_SELECETD &&
                           !IS_EQUAL ? (
                             <div className="flex flex-col gap-4  items-center">
                                 <div className="h-full">
                                     <Weather
                                         weatherInfo={selectedWeatherInfo}
-                                        size="base"
+                                        isModal
                                     />
                                 </div>
                                 <div className="w-4/5 border border-neutral-400" />
                                 <div className="h-full">
                                     <Weather
                                         weatherInfo={comparisionWeatherInfo}
-                                        size="base"
+                                        isModal
                                     />
                                 </div>
                             </div>
                         ) : (
                             <>
-                                <Form type="query-small" />
+                                <div className="flex justify-center">
+                                    <Form isModal={true} />
+                                </div>
                             </>
                         )}
                     </div>
