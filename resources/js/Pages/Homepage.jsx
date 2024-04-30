@@ -12,9 +12,10 @@ import { ModalContext } from "@/Context/ModalContext";
 import { WeatherContext } from "@/Context/WeatherContext";
 
 import { useForm } from "@inertiajs/react";
+import SavedQueries from "@/Components/SavedQueries";
 
 export default function Homepage({ queries }) {
-    const { openModal, activeModal, setOpenModal, setActiveModal } =
+    const { openModal, setOpenModal, setActiveModal, activeModal } =
         useContext(ModalContext);
     const {
         weatherInfo,
@@ -25,6 +26,14 @@ export default function Homepage({ queries }) {
     } = useContext(WeatherContext);
 
     const { setData, post } = useForm();
+
+    const HAS_WEATHER_INFO = weatherInfo !== undefined;
+    const IS_LOADING = loading !== false;
+    const HISTORY_MODAL_OPEN = activeModal === 0;
+    const SAVED_QUERIES_MODAL_OPEN = activeModal === 1;
+    const COMPARE_QUERIES_MODAL_OPEN = activeModal === 2;
+
+    console.log(activeModal);
 
     useEffect(() => {
         if (weatherInfo !== undefined) {
@@ -60,23 +69,14 @@ export default function Homepage({ queries }) {
                         </div>
 
                         <section>
-                            {/* Inicio do formulário */}
                             <div className="flex w-full h-full items-center justify-center">
-                                {/* Carregando conteúdo
-
-                                    Loading só dispara ao realizar a consulta de clima
-                                */}
-                                {loading !== false ? (
+                                {IS_LOADING ? (
                                     <>
                                         <div className="h-10 w-10 border border-sky-500 rounded-full animate-spin"></div>
                                     </>
                                 ) : (
                                     <>
-                                        {/* Se já foi relizada a consulta
-                                        
-                                        retorna Weather component e opções para salvar
-                                    */}
-                                        {weatherInfo !== undefined ? (
+                                        {HAS_WEATHER_INFO ? (
                                             <form
                                                 className="flex flex-col w-full h-full gap-2"
                                                 onSubmit={handleSubmit}
@@ -126,7 +126,6 @@ export default function Homepage({ queries }) {
                                             </form>
                                         ) : (
                                             <>
-                                                {/* Se não mostrar apenas o formulário para realizar consulta */}
                                                 <Form type="query" />
                                             </>
                                         )}
@@ -139,11 +138,11 @@ export default function Homepage({ queries }) {
             </Layout>
 
             <Modal isOpen={openModal}>
-                {activeModal === 0 ? (
+                {HISTORY_MODAL_OPEN ? (
                     <QueriesHistory />
-                ) : activeModal === 1 ? (
-                    <></>
-                ) : activeModal === 2 ? (
+                ) : SAVED_QUERIES_MODAL_OPEN ? (
+                    <SavedQueries queries={queries} />
+                ) : COMPARE_QUERIES_MODAL_OPEN ? (
                     <CompareData />
                 ) : (
                     <></>

@@ -1,13 +1,13 @@
 export default function Thermometer({ value, type }) {
-    const coldColor =
+    const COLD_COLOR =
         (value <= 15 && type == "temp") || (value <= 2 && type == "uv");
-    const coolColor =
+    const COOL_COLOR =
         (value <= 20 && type == "temp") || (value <= 4 && type == "uv");
-    const moderateColor =
+    const MODERATE_COLOR =
         (value <= 25 && type == "temp") || (value <= 6 && type == "uv");
-    const warmColor =
+    const WARM_COLOR =
         (value <= 30 && type == "temp") || (value <= 8 && type == "uv");
-    const hotColor =
+    const HOT_COLOR =
         (value <= 35 && type == "temp") || (value <= 10 && type == "uv");
 
     return (
@@ -23,15 +23,15 @@ export default function Thermometer({ value, type }) {
                 className={`h-full
                 bg-gradient-to-r 
                 ${
-                    coldColor
+                    COLD_COLOR
                         ? "from-cyan-500 to-blue-500"
-                        : coolColor
+                        : COOL_COLOR
                         ? "from-blue-500 to-green-500"
-                        : moderateColor
+                        : MODERATE_COLOR
                         ? "from-green-500 to-yellow-500"
-                        : warmColor
+                        : WARM_COLOR
                         ? "from-yellow-500 to-orange-500"
-                        : hotColor
+                        : HOT_COLOR
                         ? "from-orange-500 to-red-500"
                         : "bg-red-700"
                 }

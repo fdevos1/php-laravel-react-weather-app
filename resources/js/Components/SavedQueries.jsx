@@ -1,30 +1,25 @@
 import { useContext, useEffect, useState } from "react";
 
-import { retrieveHistory } from "@/Helpers/localStorageHistory";
-
+import { ModalContext } from "@/Context/ModalContext";
 import Icon from "./icons/icon";
 import Weather from "./Weather";
-import { ModalContext } from "@/Context/ModalContext";
 
-export default function QueriesHistory() {
-    const [queries, setQueries] = useState([]);
+export default function SavedQueries({ queries }) {
     const [selectedQuery, setSelectedQuery] = useState(undefined);
+
+    const { data } = queries;
 
     const { setOpenModal } = useContext(ModalContext);
 
-    const retrievedQueries = retrieveHistory();
-
     const QUERY_IS_SELECTED = selectedQuery !== undefined;
 
-    useEffect(() => {
-        setQueries(retrievedQueries);
-    }, []);
+    console.log(data);
 
     return (
         <>
             <div className="flex flex-col h-[600px] w-full px-4 bg-white rounded gap-2">
                 <div className="flex w-full justify-between items-center pt-4">
-                    <h3>Histórico de consultas</h3>
+                    <h3>Histórico de consultas salvas</h3>
                     <button onClick={() => setOpenModal(false)}>
                         <Icon name="close" />
                     </button>
@@ -33,12 +28,15 @@ export default function QueriesHistory() {
                 <div className="flex w-full h-full">
                     <div className="w-2/5 border-r h-full pr-2">
                         <ul>
-                            <p>Consulta</p>
-                            {queries &&
-                                queries.map((item) => (
+                            <p>Consulta salvas</p>
+                            {data &&
+                                data.map((item) => (
                                     <li
                                         onClick={() =>
-                                            setSelectedQuery(item.response)
+                                            setSelectedQuery({
+                                                current: item.current,
+                                                location: item.location,
+                                            })
                                         }
                                     >
                                         <div className="flex flex-col gap-2 border-y hover:bg-sky-300 hover:text-white cursor-pointer hover:font-semibold ">
@@ -48,8 +46,8 @@ export default function QueriesHistory() {
                                                 </span>
 
                                                 <span className="text-xs">
-                                                    {item.query.cep !== ""
-                                                        ? item.query.cep
+                                                    {item.cep !== ""
+                                                        ? item.cep
                                                         : "N/A"}
                                                 </span>
                                             </div>
@@ -59,7 +57,7 @@ export default function QueriesHistory() {
                                                 </span>
 
                                                 <span className="text-xs truncate">
-                                                    {item.query.cidade}
+                                                    {item.cidade}
                                                 </span>
                                             </div>
                                         </div>

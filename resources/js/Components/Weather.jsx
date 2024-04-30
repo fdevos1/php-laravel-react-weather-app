@@ -69,7 +69,7 @@ export default function Weather({ weatherInfo }) {
                         </div>
                     ))}
 
-                    <div className="col-span-2 flex flex-col justify-between h-auto px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow max-w-[350px] w-full">
+                    <div className="col-span-2 flex flex-col justify-between h-auto px-2 py-1 rounded-lg bg-[rgba(0,0,0,0.2)] shadow max-w-[360px] w-full">
                         <div className="flex gap-2 h-5 items-center">
                             <Icon name="wind" />
                             <p className="uppercase text-xs">Vento</p>
