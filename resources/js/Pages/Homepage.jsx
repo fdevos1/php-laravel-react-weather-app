@@ -17,7 +17,7 @@ import { WeatherContext } from "@/Context/WeatherContext";
 
 import { retrieveHistory } from "@/Helpers/localStorageHistory";
 
-export default function Homepage({ queries, status }) {
+export default function Homepage({ queries }) {
     const [retrievedQueries, setRetrievedQueries] = useState([]);
 
     const { data } = queries;
@@ -65,12 +65,9 @@ export default function Homepage({ queries, status }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const response = post(route("store"));
-        if (status === 200) {
-            createdNotify();
-        }
+        post(route("store"));
 
-        errorNotify();
+        createdNotify();
     };
 
     return (
@@ -97,7 +94,7 @@ export default function Homepage({ queries, status }) {
                                     <>
                                         {HAS_WEATHER_INFO ? (
                                             <form
-                                                className="flex flex-col w-full h-full gap-2"
+                                                className="flex flex-col w-full h-full gap-2 md:px-10"
                                                 onSubmit={handleSubmit}
                                             >
                                                 <Weather
