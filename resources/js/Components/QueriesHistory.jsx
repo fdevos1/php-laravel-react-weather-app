@@ -56,7 +56,7 @@ export default function QueriesHistory() {
                                             </span>
 
                                             <span className="text-sm truncate ">
-                                                {item.query.city}
+                                                {item.query.cidade}
                                             </span>
                                         </div>
                                     </div>

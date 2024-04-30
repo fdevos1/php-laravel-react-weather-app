@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import Layout from "@/Layouts/Layout";
 
@@ -11,9 +11,39 @@ import CompareData from "@/Components/CompareData";
 import { ModalContext } from "@/Context/ModalContext";
 import { WeatherContext } from "@/Context/WeatherContext";
 
-export default function Welcome() {
-    const { openModal, activeModal } = useContext(ModalContext);
-    const { weatherInfo, setWeatherInfo, loading } = useContext(WeatherContext);
+import { useForm } from "@inertiajs/react";
+
+export default function Homepage({ queries }) {
+    const { openModal, activeModal, setOpenModal, setActiveModal } =
+        useContext(ModalContext);
+    const {
+        weatherInfo,
+        setWeatherInfo,
+        setSelectedWeatherInfo,
+        setComparisionWeatherInfo,
+        loading,
+    } = useContext(WeatherContext);
+
+    const { setData, post } = useForm();
+
+    useEffect(() => {
+        if (weatherInfo !== undefined) {
+            const { current, location, cep, cidade } = weatherInfo;
+
+            setData({
+                cep,
+                cidade,
+                location,
+                current,
+            });
+        }
+    }, [weatherInfo]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        post(route("store"));
+    };
 
     return (
         <>
@@ -30,23 +60,37 @@ export default function Welcome() {
                         </div>
 
                         <section>
+                            {/* Inicio do formulário */}
                             <div className="flex w-full h-full items-center justify-center">
+                                {/* Carregando conteúdo
+
+                                    Loading só dispara ao realizar a consulta de clima
+                                */}
                                 {loading !== false ? (
                                     <>
-                                        <div className="h-10 w-10 border border-sky-500 roundd-full animate-spin"></div>
+                                        <div className="h-10 w-10 border border-sky-500 rounded-full animate-spin"></div>
                                     </>
                                 ) : (
                                     <>
+                                        {/* Se já foi relizada a consulta
+                                        
+                                        retorna Weather component e opções para salvar
+                                    */}
                                         {weatherInfo !== undefined ? (
-                                            <div className="flex flex-col w-full h-full gap-2">
+                                            <form
+                                                className="flex flex-col w-full h-full gap-2"
+                                                onSubmit={handleSubmit}
+                                            >
                                                 <Weather
                                                     weatherInfo={weatherInfo}
                                                 />
 
                                                 <div className="flex flex-col w-full items-center gap-2 px-8">
-                                                    <button className="w-40">
-                                                        Salvar consulta
-                                                    </button>
+                                                    <div>
+                                                        <button type="submit">
+                                                            Salvar
+                                                        </button>
+                                                    </div>
 
                                                     <div className="flex justify-between w-full">
                                                         <button
@@ -59,14 +103,30 @@ export default function Welcome() {
                                                             Nova consulta
                                                         </button>
 
-                                                        <button>
+                                                        <button
+                                                            onClick={() => {
+                                                                setOpenModal(
+                                                                    true
+                                                                );
+                                                                setActiveModal(
+                                                                    2
+                                                                );
+                                                                setSelectedWeatherInfo(
+                                                                    weatherInfo
+                                                                );
+                                                                setComparisionWeatherInfo(
+                                                                    undefined
+                                                                );
+                                                            }}
+                                                        >
                                                             Comparar clima
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         ) : (
                                             <>
+                                                {/* Se não mostrar apenas o formulário para realizar consulta */}
                                                 <Form type="query" />
                                             </>
                                         )}

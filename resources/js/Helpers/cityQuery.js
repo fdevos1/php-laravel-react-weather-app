@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const handleCityQuery = async ({ city }) => {
+const handleCityQuery = async ({ cidade }) => {
     const response = await axios.get(
         `http://api.weatherstack.com/current?access_key=${
             import.meta.env.VITE_SECRETKEY
-        }&query=${city}`
+        }&query=${cidade}`
     );
 
     return response.data;

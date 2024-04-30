@@ -22,17 +22,15 @@ export default function Form({ type }) {
     const formikProps = useFormik({
         initialValues: {
             cep: "",
-            city: "",
+            cidade: "",
         },
         onSubmit: async (data) => {
-            const { city } = data;
-
-            console.log(data);
+            const { cidade, cep } = data;
 
             setLoading(true);
 
             try {
-                const cityQuery = await handleCityQuery({ city });
+                const cityQuery = await handleCityQuery({ cidade });
                 query = data;
                 response = cityQuery;
 
@@ -48,7 +46,7 @@ export default function Form({ type }) {
                     setSelectedWeatherInfo({ location, current });
                 }
 
-                setWeatherInfo({ location, current });
+                setWeatherInfo({ location, current, cep, cidade });
                 setTimeout(() => setLoading(false), 500);
             } catch (err) {
                 console.error(err);
@@ -72,7 +70,7 @@ export default function Form({ type }) {
             const response = await fetchCity.json();
 
             const data = response;
-            formikProps.setFieldValue("city", data.localidade);
+            formikProps.setFieldValue("cidade", data.localidade);
         } catch (err) {
             console.error("CEP Inválido", err.message);
         }
@@ -116,15 +114,12 @@ export default function Form({ type }) {
                                         : ""
                                 }`}
                                 placeholder="A cidade desejada"
-                                name="city"
-                                value={formikProps.values.city}
+                                name="cidade"
+                                value={formikProps.values.cidade}
                                 onChange={formikProps.handleChange}
                             />
                         </div>
-                        <button
-                            className="border border-sky-500 rounded px-4 "
-                            type="submit"
-                        >
+                        <button className="border border-sky-500 rounded px-4 ">
                             Consultar
                         </button>
                     </div>

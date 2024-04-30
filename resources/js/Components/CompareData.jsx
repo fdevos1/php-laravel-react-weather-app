@@ -11,12 +11,13 @@ import { WeatherContext } from "@/Context/WeatherContext";
 export default function CompareData() {
     const [queries, setQueries] = useState([]);
 
-    const { setOpenCompareModal } = useContext(ModalContext);
+    const { setOpenModal } = useContext(ModalContext);
     const {
         selectedWeatherInfo,
         setSelectedWeatherInfo,
         comparisionWeatherInfo,
         setComparisionWeatherInfo,
+        setWeatherInfo,
     } = useContext(WeatherContext);
 
     const retrievedQueries = retrieveHistory();
@@ -39,7 +40,7 @@ export default function CompareData() {
             <div className="flex flex-col h-full w-full max-h-[700px] px-2 bg-white rounded gap-2 overflow-hidden">
                 <div className="flex w-full justify-between items-center pt-4">
                     <h3>Comparar climas</h3>
-                    <button onClick={() => setOpenCompareModal(false)}>
+                    <button onClick={() => setOpenModal(false)}>
                         <Icon name="close" />
                     </button>
                 </div>
@@ -48,6 +49,7 @@ export default function CompareData() {
                     <button
                         className="text-sm bg-sky-600 rounded px-2 text-white font-bold"
                         onClick={() => {
+                            setWeatherInfo(undefined);
                             setSelectedWeatherInfo(undefined);
                             setComparisionWeatherInfo(undefined);
                         }}
@@ -80,7 +82,7 @@ export default function CompareData() {
                                             </span>
 
                                             <span className="text-sm truncate ">
-                                                {item.query.city}
+                                                {item.query.cidade}
                                             </span>
                                         </div>
 
