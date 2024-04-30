@@ -11,9 +11,7 @@ use Inertia\Inertia;
 
 class QueriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $query = Queries::query();
@@ -30,35 +28,28 @@ class QueriesController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreQueriesRequest $request)
     {
 
-    // Obter todos os dados da requisição
-    $data = $request->all();
+        $query = Queries::query();
+
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", "desc");
+    
+        $queries = $query->orderBy($sortField, $sortDirection)->paginate(10);
 
 
+        $data = $request->all();
+
+
+
+        $data['location'] = json_encode($data['location']);
+        $data['current'] = json_encode($data['current']);
 
     
 
-    $query = Queries::query();
-
-    $sortField = request("sort_field", 'created_at');
-    $sortDirection = request("sort_direction", "desc");
-
-    $queries = $query->orderBy($sortField, $sortDirection)->paginate(10);
-
-
-    
-
-    $data['location'] = json_encode($data['location']);
-    $data['current'] = json_encode($data['current']);
-
-    
-    // Exibir os dados recebidos do frontend
-    // dd($data);
+        
     
     try {        
         Queries::create($data);
@@ -78,19 +69,5 @@ class QueriesController extends Controller
     }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Queries $queries)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Queries $queries)
-    {
-        //
-    }
+    
 }

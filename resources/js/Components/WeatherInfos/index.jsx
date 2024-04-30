@@ -34,7 +34,7 @@ export default function Weather({ weatherInfo }) {
 
     return (
         <>
-            <div className="flex flex-col w-full h-auto min-h-80 gap-4 md:px-10 py-4 md:border-2 md:border-sky-200 md:rounded-sm ">
+            <div className="flex flex-col w-full h-auto min-h-80 gap-4 md:px-10 md:py-4  ">
                 <div className="flex items-center justify-center gap-4">
                     <img src={current.weather_icons[0]} alt="weather_icon" />
 

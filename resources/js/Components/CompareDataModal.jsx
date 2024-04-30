@@ -49,7 +49,7 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
 
     return (
         <>
-            <div className="flex flex-col h-full w-full max-h-[700px] px-2 bg-white rounded gap-2 overflow-hidden">
+            <div className="flex flex-col h-full w-full max-h-[700px] px-2 bg-white rounded gap-2 overflow-hidden lg:max-w-[1100px]">
                 <div className="flex w-full justify-between items-center pt-4">
                     <h3>Comparar climas</h3>
                     <button onClick={() => setOpenModal(false)}>
@@ -88,32 +88,32 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                                                 <li key={i}>
                                                     <div className="flex flex-col gap-2 border-y hover:bg-neutral-100  cursor-pointer  py-1 transition-colors">
                                                         <div className="flex gap-1 items-center">
-                                                            <span className="text-xs">
+                                                            <span className="text-xs lg:text-sm">
                                                                 CEP:
                                                             </span>
 
-                                                            <span className="text-sm">
+                                                            <span className="text-sm lg:text-sm">
                                                                 {item.cep !== ""
                                                                     ? item.cep
                                                                     : "N/A"}
                                                             </span>
                                                         </div>
                                                         <div className="flex gap-1 items-center">
-                                                            <span className="text-xs">
+                                                            <span className="text-xs lg:text-sm">
                                                                 Cidade:
                                                             </span>
 
-                                                            <span className="text-sm truncate ">
+                                                            <span className="text-sm lg:text-sm truncate ">
                                                                 {item.cidade}
                                                             </span>
                                                         </div>
 
                                                         <div className="flex gap-1 items-center">
-                                                            <span className="text-xs">
+                                                            <span className="text-xs lg:text-sm">
                                                                 Data:
                                                             </span>
 
-                                                            <span className="text-xs truncate">
+                                                            <span className="text-xs lg:text-sm truncate">
                                                                 {format(
                                                                     item.date
                                                                         ? item.date
@@ -164,10 +164,10 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                             })}
                     </div>
 
-                    <div className="w-full h-full overflow-auto pb-2 ">
+                    <div className="flex w-full h-full overflow-auto pb-2 lg:justify-center ">
                         {WEATHER_IS_SELECTED &&
                         COMPARE_WEATHER_IS_NOT_SELECTED ? (
-                            <div className="flex flex-col gap-2 items-center ">
+                            <div className="flex flex-col gap-2 items-center lg:flex-row ">
                                 <Weather
                                     weatherInfo={selectedWeatherInfo}
                                     isModal
@@ -182,14 +182,14 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                         ) : WEATHER_IS_SELECTED &&
                           COMPARE_WEATHER_IS_SELECETD &&
                           !IS_EQUAL ? (
-                            <div className="flex flex-col gap-4  items-center">
+                            <div className="flex flex-col gap-4  items-center lg:flex-row">
                                 <div className="h-full">
                                     <Weather
                                         weatherInfo={selectedWeatherInfo}
                                         isModal
                                     />
                                 </div>
-                                <div className="w-4/5 border border-neutral-400" />
+                                <div className="w-4/5 lg:h-4/5 lg:w-0 border border-neutral-400" />
                                 <div className="h-full">
                                     <Weather
                                         weatherInfo={comparisionWeatherInfo}
