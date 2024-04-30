@@ -1,7 +1,7 @@
-export function addToHistory(cep, cidade, location, current) {
+export function addToHistory(cep, cidade, location, current, date) {
     let history = JSON.parse(localStorage.getItem("queryHistory")) || [];
 
-    history.push({ cep, cidade, location, current });
+    history.push({ cep, cidade, location, current, date });
 
     localStorage.setItem("queryHistory", JSON.stringify(history));
 }

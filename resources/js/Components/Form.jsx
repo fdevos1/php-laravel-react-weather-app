@@ -35,7 +35,8 @@ export default function Form({ isModal, component }) {
                 const cityQuery = await handleCityQuery({ cidade });
 
                 const { location, current } = cityQuery;
-                addToHistory(cep, cidade, location, current);
+                const date = new Date();
+                addToHistory(cep, cidade, location, current, date);
 
                 if (component === "comparision-query") {
                     setComparisionWeatherInfo({ location, current });

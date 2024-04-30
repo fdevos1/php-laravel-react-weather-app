@@ -24,6 +24,7 @@ class QueriesResource extends JsonResource
             'cidade' => $this->cidade,
             'location' => $location,
             'current' => $current,
+            'created_at' => $this->created_at
         ];
     }
 }

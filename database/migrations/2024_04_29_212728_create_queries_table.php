@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('cidade');
             $table->json('location');
             $table->json('current');
-            $table->timestamps();
+            $table->timestamps('created_at');
         });
     }
 

@@ -20,7 +20,7 @@ class QueriesController extends Controller
 
         $sortField = request("sort_field", 'created_at');
         $sortDirection = request("sort_direction", "desc");
-
+        
         $queries = $query->orderBy($sortField, $sortDirection)->paginate(10);
 
         return Inertia::render('Homepage', [
@@ -38,6 +38,10 @@ class QueriesController extends Controller
 
     // Obter todos os dados da requisição
     $data = $request->all();
+
+
+
+    
 
     $query = Queries::query();
 

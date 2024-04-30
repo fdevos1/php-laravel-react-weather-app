@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { format } from "date-fns";
 
 import { ModalContext } from "@/Context/ModalContext";
 import { WeatherContext } from "@/Context/WeatherContext";
@@ -23,6 +24,7 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
         JSON.stringify(comparisionWeatherInfo);
 
     const WEATHER_IS_SELECTED = selectedWeatherInfo !== undefined;
+    const WEATHER_IS_NOT_SELECTED = selectedWeatherInfo === undefined;
     const COMPARE_WEATHER_IS_SELECETD = comparisionWeatherInfo !== undefined;
     const COMPARE_WEATHER_IS_NOT_SELECTED =
         comparisionWeatherInfo === undefined;
@@ -55,8 +57,12 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                     </button>
                 </div>
 
-                <div>
+                <div className="self-end">
                     <Button
+                        disabled={
+                            WEATHER_IS_NOT_SELECTED &&
+                            COMPARE_WEATHER_IS_NOT_SELECTED
+                        }
                         text="Nova comparação"
                         color="blue"
                         action={() => {
@@ -70,17 +76,17 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                 <div className="flex w-full h-full overflow-auto">
                     <div className="w-2/5 h-full flex flex-col gap-2 border-r max-w-52 min-w-36 px-[1px]">
                         {queriesLists &&
-                            queriesLists.map(({ title, content }) => {
+                            queriesLists.map(({ title, content }, i) => {
                                 return (
-                                    <ul className="h-1/2 overflow-auto ">
+                                    <ul className="h-1/2 overflow-auto" key={i}>
                                         <div className="text-xs bg-white font-semibold sticky top-0 py-1">
                                             <p>{title}</p>
                                         </div>
 
                                         {content &&
-                                            content.map((item) => (
-                                                <li>
-                                                    <div className="flex flex-col gap-2 border-y hover:bg-sky-100  cursor-pointer  py-1 transition-colors">
+                                            content.map((item, i) => (
+                                                <li key={i}>
+                                                    <div className="flex flex-col gap-2 border-y hover:bg-neutral-100  cursor-pointer  py-1 transition-colors">
                                                         <div className="flex gap-1 items-center">
                                                             <span className="text-xs">
                                                                 CEP:
@@ -99,6 +105,21 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
 
                                                             <span className="text-sm truncate ">
                                                                 {item.cidade}
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="flex gap-1 items-center">
+                                                            <span className="text-xs">
+                                                                Data:
+                                                            </span>
+
+                                                            <span className="text-xs truncate">
+                                                                {format(
+                                                                    item.date
+                                                                        ? item.date
+                                                                        : item.created_at,
+                                                                    "H:m - dd/MM/yyyy"
+                                                                )}
                                                             </span>
                                                         </div>
 

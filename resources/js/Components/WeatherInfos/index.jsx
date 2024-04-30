@@ -4,7 +4,7 @@ import WeatherWindBox from "./WeatherWindBox";
 import Thermometer from "./Thermometer";
 import WeatherMainInfos from "./WeatherMainInfos";
 
-export default function Weather({ weatherInfo, isModal }) {
+export default function Weather({ weatherInfo }) {
     const { current, location } = weatherInfo;
 
     const weatherBox = [
@@ -38,7 +38,9 @@ export default function Weather({ weatherInfo, isModal }) {
                 <div className="flex items-center justify-center gap-4">
                     <img src={current.weather_icons[0]} alt="weather_icon" />
 
-                    <span>{current.weather_descriptions}</span>
+                    <span className="lg:text-2xl">
+                        {current.weather_descriptions}
+                    </span>
                 </div>
 
                 <div className="grid grid-cols-2 auto-rows-auto px-2 gap-x-4 gap-y-2 place-items-center">

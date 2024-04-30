@@ -1,25 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useForm } from "@inertiajs/react";
 
 import Layout from "@/Layouts/Layout";
 
 import Form from "@/Components/Form";
 import Weather from "@/Components/WeatherInfos";
 import Modal from "@/Components/Modal";
+import Toastify from "@/Components/Toastify";
+import QueriesModal from "@/Components/QueriesModal";
+import CompareDataModal from "@/Components/CompareDataModal";
+import Button from "@/Components/Button";
 
 import { ModalContext } from "@/Context/ModalContext";
 import { WeatherContext } from "@/Context/WeatherContext";
 
-import { useForm } from "@inertiajs/react";
-import Toastify from "@/Components/Toastify";
-import QueriesModal from "@/Components/QueriesModal";
 import { retrieveHistory } from "@/Helpers/localStorageHistory";
-import CompareDataModal from "@/Components/CompareDataModal";
 
 export default function Homepage({ queries, status }) {
     const [retrievedQueries, setRetrievedQueries] = useState([]);
 
     const { data } = queries;
+
+    console.log(queries);
 
     const createdNotify = () => toast.success("Consulta salva com sucesso");
     const errorNotify = () => toast.error("Erro ao salvar consulta");
@@ -62,8 +65,7 @@ export default function Homepage({ queries, status }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route("store"));
-
+        const response = post(route("store"));
         if (status === 200) {
             createdNotify();
         }
@@ -104,24 +106,28 @@ export default function Homepage({ queries, status }) {
 
                                                 <div className="flex flex-col w-full items-center gap-2 px-8">
                                                     <div>
-                                                        <button type="submit">
-                                                            Salvar
-                                                        </button>
+                                                        <Button
+                                                            text="Salvar"
+                                                            color="blue"
+                                                            type="submit"
+                                                        />
                                                     </div>
 
                                                     <div className="flex justify-between w-full">
-                                                        <button
-                                                            onClick={() =>
+                                                        <Button
+                                                            text="Nova consulta"
+                                                            color="sky"
+                                                            action={() =>
                                                                 setWeatherInfo(
                                                                     undefined
                                                                 )
                                                             }
-                                                        >
-                                                            Nova consulta
-                                                        </button>
+                                                        />
 
-                                                        <button
-                                                            onClick={() => {
+                                                        <Button
+                                                            text="Comparar clima"
+                                                            color="sky"
+                                                            action={() => {
                                                                 setOpenModal(
                                                                     true
                                                                 );
@@ -135,9 +141,7 @@ export default function Homepage({ queries, status }) {
                                                                     undefined
                                                                 );
                                                             }}
-                                                        >
-                                                            Comparar clima
-                                                        </button>
+                                                        />
                                                     </div>
                                                 </div>
                                             </form>
