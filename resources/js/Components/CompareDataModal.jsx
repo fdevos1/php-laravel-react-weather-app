@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { format } from "date-fns";
 
 import { ModalContext } from "@/Context/ModalContext";
@@ -8,9 +8,12 @@ import Icon from "./icons/icon";
 import Weather from "./WeatherInfos";
 import Form from "./Form";
 import Button from "./Button";
+import Searchbar from "./Searchbar";
 
 export default function CompareDataModal({ retrievedQueries, savedQueries }) {
+    const [searchTerm, setSearchTerm] = useState("");
     const { setOpenModal } = useContext(ModalContext);
+
     const {
         selectedWeatherInfo,
         setSelectedWeatherInfo,
@@ -47,6 +50,12 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
         },
     ];
 
+    const handleSearchTerm = (e) => {
+        const query = e.target.value;
+
+        setSearchTerm(query);
+    };
+
     return (
         <>
             <div className="flex flex-col h-full w-full max-h-[700px] px-2 bg-white rounded gap-2 overflow-hidden lg:max-w-[1100px]">
@@ -56,6 +65,11 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                         <Icon name="close" />
                     </button>
                 </div>
+
+                <Searchbar
+                    searchTerm={searchTerm}
+                    setSearchTerm={handleSearchTerm}
+                />
 
                 <div className="self-end">
                     <Button
@@ -79,86 +93,101 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                             queriesLists.map(({ title, content }, i) => {
                                 return (
                                     <ul className="h-1/2 overflow-auto" key={i}>
-                                        <div className="text-xs bg-white font-semibold sticky top-0 py-1">
+                                        <div className="text-xs bg-white font-semibold sticky top-0 py-2">
                                             <p>{title}</p>
                                         </div>
 
                                         {content &&
-                                            content.map((item, i) => (
-                                                <li key={i}>
-                                                    <div className="flex flex-col gap-2 border-y hover:bg-neutral-100  cursor-pointer  py-1 transition-colors">
-                                                        <div className="flex gap-1 items-center">
-                                                            <span className="text-xs lg:text-sm">
-                                                                CEP:
-                                                            </span>
+                                            content
+                                                .filter((item) =>
+                                                    searchTerm === ""
+                                                        ? item
+                                                        : item.cidade
+                                                              .toLowerCase()
+                                                              .includes(
+                                                                  searchTerm
+                                                              ) ||
+                                                          (item.cep &&
+                                                              item.cep.includes(
+                                                                  searchTerm
+                                                              ))
+                                                )
+                                                .map((item, i) => (
+                                                    <li key={i}>
+                                                        <div className="flex flex-col gap-2 border-y hover:bg-neutral-100  cursor-pointer  py-1 transition-colors">
+                                                            <div className="flex gap-1 items-center">
+                                                                <span className="text-xs lg:text-sm">
+                                                                    CEP:
+                                                                </span>
 
-                                                            <span className="text-sm lg:text-sm">
-                                                                {item.cep !== ""
-                                                                    ? item.cep
-                                                                    : "N/A"}
-                                                            </span>
-                                                        </div>
-                                                        <div className="flex gap-1 items-center">
-                                                            <span className="text-xs lg:text-sm">
-                                                                Cidade:
-                                                            </span>
+                                                                <span className="text-sm lg:text-sm">
+                                                                    {item.cep &&
+                                                                        item.cep}
+                                                                </span>
+                                                            </div>
+                                                            <div className="flex gap-1 items-center">
+                                                                <span className="text-xs lg:text-sm">
+                                                                    Cidade:
+                                                                </span>
 
-                                                            <span className="text-sm lg:text-sm truncate ">
-                                                                {item.cidade}
-                                                            </span>
-                                                        </div>
+                                                                <span className="text-sm lg:text-sm truncate ">
+                                                                    {
+                                                                        item.cidade
+                                                                    }
+                                                                </span>
+                                                            </div>
 
-                                                        <div className="flex gap-1 items-center">
-                                                            <span className="text-xs lg:text-sm">
-                                                                Data:
-                                                            </span>
+                                                            <div className="flex gap-1 items-center">
+                                                                <span className="text-xs lg:text-sm">
+                                                                    Data:
+                                                                </span>
 
-                                                            <span className="text-xs lg:text-sm truncate">
-                                                                {format(
-                                                                    item.date
-                                                                        ? item.date
-                                                                        : item.created_at,
-                                                                    "H:m - dd/MM/yyyy"
+                                                                <span className="text-xs lg:text-sm truncate">
+                                                                    {format(
+                                                                        item.date
+                                                                            ? item.date
+                                                                            : item.created_at,
+                                                                        "H:m - dd/MM/yyyy"
+                                                                    )}
+                                                                </span>
+                                                            </div>
+
+                                                            <div className="flex justify-center ">
+                                                                {WEATHER_IS_SELECTED ? (
+                                                                    <Button
+                                                                        text="Comparar"
+                                                                        color="sky"
+                                                                        action={() =>
+                                                                            setComparisionWeatherInfo(
+                                                                                {
+                                                                                    location:
+                                                                                        item.location,
+                                                                                    current:
+                                                                                        item.current,
+                                                                                }
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                ) : (
+                                                                    <Button
+                                                                        text="Selecionar"
+                                                                        color="blue"
+                                                                        action={() =>
+                                                                            setSelectedWeatherInfo(
+                                                                                {
+                                                                                    location:
+                                                                                        item.location,
+                                                                                    current:
+                                                                                        item.current,
+                                                                                }
+                                                                            )
+                                                                        }
+                                                                    />
                                                                 )}
-                                                            </span>
+                                                            </div>
                                                         </div>
-
-                                                        <div className="flex justify-center ">
-                                                            {WEATHER_IS_SELECTED ? (
-                                                                <Button
-                                                                    text="Comparar"
-                                                                    color="sky"
-                                                                    action={() =>
-                                                                        setComparisionWeatherInfo(
-                                                                            {
-                                                                                location:
-                                                                                    item.location,
-                                                                                current:
-                                                                                    item.current,
-                                                                            }
-                                                                        )
-                                                                    }
-                                                                />
-                                                            ) : (
-                                                                <Button
-                                                                    text="Selecionar"
-                                                                    color="blue"
-                                                                    action={() =>
-                                                                        setSelectedWeatherInfo(
-                                                                            {
-                                                                                location:
-                                                                                    item.location,
-                                                                                current:
-                                                                                    item.current,
-                                                                            }
-                                                                        )
-                                                                    }
-                                                                />
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            ))}
+                                                    </li>
+                                                ))}
                                     </ul>
                                 );
                             })}

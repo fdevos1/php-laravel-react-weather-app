@@ -5,12 +5,19 @@ import { ModalContext } from "@/Context/ModalContext";
 import Icon from "./icons/icon";
 import Weather from "./WeatherInfos";
 import { format } from "date-fns";
+import Searchbar from "./Searchbar";
 
 export default function QueriesModal({ title, listTitle, content }) {
     const [selectedQuery, setSelectedQuery] = useState(undefined);
+    const [searchTerm, setSearchTerm] = useState("");
+
     const { setOpenModal } = useContext(ModalContext);
 
-    console.log(content);
+    const handleSearchTerm = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    console.log(searchTerm);
 
     const QUERY_IS_SELECTED = selectedQuery !== undefined;
 
@@ -23,6 +30,11 @@ export default function QueriesModal({ title, listTitle, content }) {
                 </button>
             </div>
 
+            <Searchbar
+                searchTerm={searchTerm}
+                setSearchTerm={handleSearchTerm}
+            />
+
             <div className="flex w-full h-full">
                 <div className="w-full border-r h-full pr-2 max-w-40 md:max-w-52 lg:max-w-60">
                     <ul className="overflow-auto">
@@ -30,54 +42,64 @@ export default function QueriesModal({ title, listTitle, content }) {
                             {listTitle}
                         </p>
                         {content &&
-                            content.map((item, i) => (
-                                <li
-                                    key={i}
-                                    onClick={() =>
-                                        setSelectedQuery({
-                                            location: item.location,
-                                            current: item.current,
-                                        })
-                                    }
-                                >
-                                    <div className="flex flex-col gap-2 border-y hover:bg-neutral-100  cursor-pointer">
-                                        <div className="flex gap-1 items-center">
-                                            <span className="text-xs lg:text-base">
-                                                CEP:
-                                            </span>
+                            content
+                                .filter((item) =>
+                                    searchTerm === ""
+                                        ? item
+                                        : item.cidade
+                                              .toLowerCase()
+                                              .includes(searchTerm) ||
+                                          (item.cep &&
+                                              item.cep.includes(searchTerm))
+                                )
+                                .map((item, i) => (
+                                    <li
+                                        key={i}
+                                        onClick={() =>
+                                            setSelectedQuery({
+                                                location: item.location,
+                                                current: item.current,
+                                            })
+                                        }
+                                    >
+                                        <div className="flex flex-col gap-2 border-y hover:bg-neutral-100  cursor-pointer">
+                                            <div className="flex gap-1 items-center">
+                                                <span className="text-xs lg:text-base">
+                                                    CEP:
+                                                </span>
 
-                                            <span className="text-xs lg:text-base">
-                                                {item.cep !== ""
-                                                    ? item.cep
-                                                    : "N/A"}
-                                            </span>
-                                        </div>
-                                        <div className="flex gap-1 items-center">
-                                            <span className="text-xs lg:text-base">
-                                                Cidade:
-                                            </span>
+                                                <span className="text-xs lg:text-base">
+                                                    {item.cep !== ""
+                                                        ? item.cep
+                                                        : "N/A"}
+                                                </span>
+                                            </div>
+                                            <div className="flex gap-1 items-center">
+                                                <span className="text-xs lg:text-base">
+                                                    Cidade:
+                                                </span>
 
-                                            <span className="text-xs lg:text-base truncate">
-                                                {item.cidade}
-                                            </span>
-                                        </div>
-                                        <div className="flex gap-1 items-center">
-                                            <span className="text-xs lg:text-base">
-                                                Horário:
-                                            </span>
+                                                <span className="text-xs lg:text-base truncate">
+                                                    {item.cidade}
+                                                </span>
+                                            </div>
+                                            <div className="flex gap-1 items-center">
+                                                <span className="text-xs lg:text-base">
+                                                    Horário:
+                                                </span>
 
-                                            <span className="text-xs lg:text-base truncate">
-                                                {format(
-                                                    item.date
-                                                        ? item.date
-                                                        : item.created_at,
-                                                    "H:m - dd/MM/yyyy"
-                                                )}
-                                            </span>
+                                                <span className="text-xs lg:text-base truncate">
+                                                    {format(
+                                                        item.date
+                                                            ? item.date
+                                                            : item.created_at,
+                                                        "H:m - dd/MM/yyyy"
+                                                    )}
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            ))}
+                                    </li>
+                                ))}
                     </ul>
                 </div>
 
