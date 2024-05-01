@@ -20,6 +20,7 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
         comparisionWeatherInfo,
         setComparisionWeatherInfo,
         setWeatherInfo,
+        loading,
     } = useContext(WeatherContext);
 
     const IS_EQUAL =
@@ -31,6 +32,8 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
     const COMPARE_WEATHER_IS_SELECETD = comparisionWeatherInfo !== undefined;
     const COMPARE_WEATHER_IS_NOT_SELECTED =
         comparisionWeatherInfo === undefined;
+
+    const IS_LOADING = loading === true;
 
     useEffect(() => {
         if (IS_EQUAL) {
@@ -105,11 +108,11 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                                                         : item.cidade
                                                               .toLowerCase()
                                                               .includes(
-                                                                  searchTerm
+                                                                  searchTerm.toLowerCase()
                                                               ) ||
                                                           (item.cep &&
                                                               item.cep.includes(
-                                                                  searchTerm
+                                                                  searchTerm.toLowerCase()
                                                               ))
                                                 )
                                                 .map((item, i) => (
@@ -193,47 +196,51 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                             })}
                     </div>
 
-                    <div className="flex w-full h-full overflow-auto pb-2 lg:justify-center ">
-                        {WEATHER_IS_SELECTED &&
-                        COMPARE_WEATHER_IS_NOT_SELECTED ? (
-                            <div className="flex flex-col gap-2 items-center lg:flex-row ">
+                    {WEATHER_IS_SELECTED && COMPARE_WEATHER_IS_NOT_SELECTED ? (
+                        <div className="flex flex-col gap-2 items-center lg:flex-row">
+                            <Weather
+                                weatherInfo={selectedWeatherInfo}
+                                isModal
+                            />
+
+                            <span className="text-sm text-center text-neutral-500">
+                                Selecione outra consulta ou consulte abaixo
+                            </span>
+
+                            <Form
+                                isModal={true}
+                                setState={"comparision-query"}
+                            />
+                        </div>
+                    ) : WEATHER_IS_SELECTED &&
+                      COMPARE_WEATHER_IS_SELECETD &&
+                      !IS_EQUAL ? (
+                        <div className="flex flex-col gap-4 items-center lg:flex-row ">
+                            <div className="h-full">
                                 <Weather
                                     weatherInfo={selectedWeatherInfo}
                                     isModal
                                 />
-
-                                <span className="text-sm text-center text-neutral-500">
-                                    Selecione outra consulta ou consulte abaixo
-                                </span>
-
-                                <Form isModal={true} />
                             </div>
-                        ) : WEATHER_IS_SELECTED &&
-                          COMPARE_WEATHER_IS_SELECETD &&
-                          !IS_EQUAL ? (
-                            <div className="flex flex-col gap-4  items-center lg:flex-row">
-                                <div className="h-full">
-                                    <Weather
-                                        weatherInfo={selectedWeatherInfo}
-                                        isModal
-                                    />
-                                </div>
-                                <div className="w-4/5 lg:h-4/5 lg:w-0 border border-neutral-400" />
-                                <div className="h-full">
-                                    <Weather
-                                        weatherInfo={comparisionWeatherInfo}
-                                        isModal
-                                    />
-                                </div>
+                            <div className="w-4/5 lg:h-4/5 lg:w-0 border border-neutral-400" />
+                            <div className="h-full">
+                                <Weather
+                                    weatherInfo={comparisionWeatherInfo}
+                                    isModal
+                                />
                             </div>
-                        ) : (
-                            <>
-                                <div className="flex justify-center">
-                                    <Form isModal={true} />
-                                </div>
-                            </>
-                        )}
-                    </div>
+                        </div>
+                    ) : IS_LOADING ? (
+                        <div className="flex w-full justify-center items-center">
+                            <div className="h-10 w-10 border border-sky-500 rounded-full animate-spin" />
+                        </div>
+                    ) : (
+                        <>
+                            <div className="flex justify-center w-full">
+                                <Form isModal={true} setState={"modal-query"} />
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </>

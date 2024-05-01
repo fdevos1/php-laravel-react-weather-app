@@ -32,6 +32,18 @@ class QueriesController extends Controller
     public function store(StoreQueriesRequest $request)
     {
 
+        $data = $request->all();
+
+    
+
+        $data['location'] = json_encode($data['location']);
+        $data['current'] = json_encode($data['current']);
+        
+    
+    try {        
+        Queries::create($data);
+
+
         $query = Queries::query();
 
         $sortField = request("sort_field", 'created_at');
@@ -40,19 +52,11 @@ class QueriesController extends Controller
         $queries = $query->orderBy($sortField, $sortDirection)->paginate(10);
 
 
-        $data = $request->all();
 
 
 
-        $data['location'] = json_encode($data['location']);
-        $data['current'] = json_encode($data['current']);
 
-    
 
-        
-    
-    try {        
-        Queries::create($data);
 
        return Inertia::render('Homepage', [
         'message' => 'consulta salva',

@@ -22,10 +22,7 @@ export default function Homepage({ queries }) {
 
     const { data } = queries;
 
-    console.log(queries);
-
     const createdNotify = () => toast.success("Consulta salva com sucesso");
-    const errorNotify = () => toast.error("Erro ao salvar consulta");
 
     const retrieveLocalQueries = retrieveHistory();
 
@@ -80,7 +77,7 @@ export default function Homepage({ queries }) {
                                 <div className="flex w-full h-full items-center justify-center">
                                     {IS_LOADING ? (
                                         <>
-                                            <div className="h-10 w-10 border border-sky-500 rounded-full animate-spin"></div>
+                                            <div className="h-10 w-10 border border-sky-500 rounded-full animate-spin" />
                                         </>
                                     ) : (
                                         <>
@@ -106,6 +103,7 @@ export default function Homepage({ queries }) {
 
                                                         <div className="flex justify-between w-full">
                                                             <Button
+                                                                type="button"
                                                                 text="Nova consulta"
                                                                 color="sky"
                                                                 action={() =>
@@ -116,6 +114,7 @@ export default function Homepage({ queries }) {
                                                             />
 
                                                             <Button
+                                                                type="button"
                                                                 text="Comparar clima"
                                                                 color="sky"
                                                                 action={() => {

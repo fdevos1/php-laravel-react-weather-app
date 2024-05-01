@@ -11,9 +11,7 @@ import InputMask from "./InputMask";
 import Button from "./Button";
 import FormError from "./FormError";
 
-export default function Form({ isModal, component }) {
-    console.log(isModal);
-
+export default function Form({ isModal, setState }) {
     const {
         setWeatherInfo,
         setComparisionWeatherInfo,
@@ -38,11 +36,11 @@ export default function Form({ isModal, component }) {
                 const date = new Date();
                 addToHistory(cep, cidade, location, current, date);
 
-                if (component === "comparision-query") {
+                if (setState === "comparision-query") {
                     setComparisionWeatherInfo({ location, current });
                 }
 
-                if (component === "query-small") {
+                if (setState === "modal-query") {
                     setSelectedWeatherInfo({ location, current });
                 }
 
@@ -123,7 +121,7 @@ export default function Form({ isModal, component }) {
                                 </div>
                             ))}
                         </div>
-                        <Button text="buscar" color="blue" />
+                        <Button text="buscar" color="blue" type="submit" />
                     </div>
                 </form>
             </div>

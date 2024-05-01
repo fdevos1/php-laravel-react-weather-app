@@ -17,8 +17,6 @@ export default function QueriesModal({ title, listTitle, content }) {
         setSearchTerm(e.target.value);
     };
 
-    console.log(searchTerm);
-
     const QUERY_IS_SELECTED = selectedQuery !== undefined;
 
     return (
@@ -35,9 +33,9 @@ export default function QueriesModal({ title, listTitle, content }) {
                 setSearchTerm={handleSearchTerm}
             />
 
-            <div className="flex w-full h-full">
-                <div className="w-full border-r h-full pr-2 max-w-40 md:max-w-52 lg:max-w-60">
-                    <ul className="overflow-auto">
+            <div className="flex w-full h-full overflow-hidden">
+                <div className="w-full border-r h-full pr-2 max-w-40 md:max-w-52 lg:max-w-60 overflow-auto">
+                    <ul>
                         <p className="text-sm lg:text-base font-semibold">
                             {listTitle}
                         </p>
@@ -103,7 +101,7 @@ export default function QueriesModal({ title, listTitle, content }) {
                     </ul>
                 </div>
 
-                <div className="w-full h-full">
+                <div className="flex justify-center w-full h-full">
                     {QUERY_IS_SELECTED ? (
                         <Weather
                             weatherInfo={selectedQuery}
