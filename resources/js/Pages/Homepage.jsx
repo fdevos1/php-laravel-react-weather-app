@@ -76,81 +76,85 @@ export default function Homepage({ queries }) {
                 <>
                     <main>
                         <div className="w-full flex flex-col items-center gap-1">
-                            <h1 className="text-2xl font-bold">
-                                Clima e Tempo
-                            </h1>
-                            <span className="text-sm">
-                                Consulte e compare informações meteorológicas
-                            </span>
-                        </div>
+                            <section>
+                                <div className="flex w-full h-full items-center justify-center">
+                                    {IS_LOADING ? (
+                                        <>
+                                            <div className="h-10 w-10 border border-sky-500 rounded-full animate-spin"></div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            {HAS_WEATHER_INFO ? (
+                                                <form
+                                                    className="flex flex-col w-full h-full gap-2 md:px-10"
+                                                    onSubmit={handleSubmit}
+                                                >
+                                                    <Weather
+                                                        weatherInfo={
+                                                            weatherInfo
+                                                        }
+                                                    />
 
-                        <section>
-                            <div className="flex w-full h-full items-center justify-center">
-                                {IS_LOADING ? (
-                                    <>
-                                        <div className="h-10 w-10 border border-sky-500 rounded-full animate-spin"></div>
-                                    </>
-                                ) : (
-                                    <>
-                                        {HAS_WEATHER_INFO ? (
-                                            <form
-                                                className="flex flex-col w-full h-full gap-2 md:px-10"
-                                                onSubmit={handleSubmit}
-                                            >
-                                                <Weather
-                                                    weatherInfo={weatherInfo}
-                                                />
+                                                    <div className="flex flex-col w-full items-center gap-2 px-8">
+                                                        <div>
+                                                            <Button
+                                                                text="Salvar"
+                                                                color="blue"
+                                                                type="submit"
+                                                            />
+                                                        </div>
 
-                                                <div className="flex flex-col w-full items-center gap-2 px-8">
-                                                    <div>
-                                                        <Button
-                                                            text="Salvar"
-                                                            color="blue"
-                                                            type="submit"
-                                                        />
+                                                        <div className="flex justify-between w-full">
+                                                            <Button
+                                                                text="Nova consulta"
+                                                                color="sky"
+                                                                action={() =>
+                                                                    setWeatherInfo(
+                                                                        undefined
+                                                                    )
+                                                                }
+                                                            />
+
+                                                            <Button
+                                                                text="Comparar clima"
+                                                                color="sky"
+                                                                action={() => {
+                                                                    setOpenModal(
+                                                                        true
+                                                                    );
+                                                                    setActiveModal(
+                                                                        2
+                                                                    );
+                                                                    setSelectedWeatherInfo(
+                                                                        weatherInfo
+                                                                    );
+                                                                    setComparisionWeatherInfo(
+                                                                        undefined
+                                                                    );
+                                                                }}
+                                                            />
+                                                        </div>
                                                     </div>
+                                                </form>
+                                            ) : (
+                                                <div className="flex flex-col items-center ">
+                                                    <h1 className="text-2xl font-bold">
+                                                        Clima e Tempo
+                                                    </h1>
+                                                    <span className="text-sm">
+                                                        Consulte e compare
+                                                        informações
+                                                        meteorológicas
+                                                    </span>
 
-                                                    <div className="flex justify-between w-full">
-                                                        <Button
-                                                            text="Nova consulta"
-                                                            color="sky"
-                                                            action={() =>
-                                                                setWeatherInfo(
-                                                                    undefined
-                                                                )
-                                                            }
-                                                        />
-
-                                                        <Button
-                                                            text="Comparar clima"
-                                                            color="sky"
-                                                            action={() => {
-                                                                setOpenModal(
-                                                                    true
-                                                                );
-                                                                setActiveModal(
-                                                                    2
-                                                                );
-                                                                setSelectedWeatherInfo(
-                                                                    weatherInfo
-                                                                );
-                                                                setComparisionWeatherInfo(
-                                                                    undefined
-                                                                );
-                                                            }}
-                                                        />
-                                                    </div>
+                                                    <Form isModal={false} />
                                                 </div>
-                                            </form>
-                                        ) : (
-                                            <>
-                                                <Form isModal={false} />
-                                            </>
-                                        )}
-                                    </>
-                                )}
-                            </div>
-                        </section>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                            </section>
+                        </div>
                     </main>
                 </>
             </Layout>
