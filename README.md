@@ -6,7 +6,13 @@ Primeiro clone o projeto
 
 `git clone https://github.com/fdevos1/php-laravel-react-weather-app.git`
 
-Entre dentro do projeto e será necessário rodar dois terminais:
+Entre dentro do projeto e instale as dependências:
+
+`composer install`
+
+`npm install`
+
+Será necessário rodar dois terminais para rodar o aplicativo:
 
 `php artisan serve`
 
