@@ -20,12 +20,13 @@
 
 -   Consulta de clima
 
-    https://github.com/fdevos1/php-laravel-react-weather-app/assets/68919511/03d99371-62ef-4dda-991b-8e671f1a8d86
+   ![consulta](https://github.com/fdevos1/php-laravel-react-weather-app/assets/68919511/da736354-6fdd-4607-9b00-b22e31d1a932)
 
+    
 -    Salvar Consultas
  
 
-https://github.com/fdevos1/php-laravel-react-weather-app/assets/68919511/312d3d88-bd19-4896-80d7-dd69c598d8a1
+
 
 
       
