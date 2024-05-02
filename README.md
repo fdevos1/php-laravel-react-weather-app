@@ -27,12 +27,15 @@ O servidor roda na porta 8000
     ![salvar consulta](https://github.com/fdevos1/php-laravel-react-weather-app/assets/68919511/c74c54fc-9a61-4856-923f-7aea9da82703)
 
 -   Histórico de consultas
+
     ![historico](https://github.com/fdevos1/php-laravel-react-weather-app/assets/68919511/034b3476-c620-42c4-af74-b1b85bb2b3c0)
 
 -   Consultas Salvas
+
     ![consultas salvas](https://github.com/fdevos1/php-laravel-react-weather-app/assets/68919511/2fe1b2ac-17d8-43ce-9e9d-34dd6709d193)
 
 -   Comparação de consultas
+
     ![comparar](https://github.com/fdevos1/php-laravel-react-weather-app/assets/68919511/ff887e46-6fcb-4079-b387-43a9f8e57f6e)
 
 ## Considerações
