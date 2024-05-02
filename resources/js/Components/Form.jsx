@@ -24,6 +24,7 @@ export default function Form({ isModal, setState }) {
             cep: "",
             cidade: "",
         },
+        validateOnChange: false,
         onSubmit: async (data) => {
             const { cidade, cep } = data;
 
@@ -59,17 +60,19 @@ export default function Form({ isModal, setState }) {
 
         value = value.replace(/\D/g, "");
 
-        try {
-            const fetchCity = await fetch(
-                `http://viacep.com.br/ws/${value}/json/`
-            );
+        if (value.length === 8) {
+            try {
+                const fetchCity = await fetch(
+                    `http://viacep.com.br/ws/${value}/json/`
+                );
 
-            const response = await fetchCity.json();
+                const response = await fetchCity.json();
 
-            const data = response;
-            formikProps.setFieldValue("cidade", data.localidade);
-        } catch (err) {
-            console.error("CEP Inválido", err.message);
+                const data = response;
+                formikProps.setFieldValue("cidade", data.localidade);
+            } catch (err) {
+                console.error("CEP Inválido", err.message);
+            }
         }
     };
 
@@ -86,6 +89,7 @@ export default function Form({ isModal, setState }) {
                 />
             ),
             error: formikProps.errors.cep,
+            name: "cep",
         },
         {
             component: (
@@ -98,6 +102,7 @@ export default function Form({ isModal, setState }) {
                 />
             ),
             error: formikProps.errors.cidade,
+            name: "cidade",
         },
     ];
 
@@ -111,7 +116,7 @@ export default function Form({ isModal, setState }) {
                             w-full
                             gap-2 ${isModal ? "items-start" : "items-center"}`}
                         >
-                            {inputLists.map(({ component, error }, i) => (
+                            {inputLists.map(({ component, error, name }, i) => (
                                 <div
                                     className="flex flex-col min-h-16 justify-between"
                                     key={i}

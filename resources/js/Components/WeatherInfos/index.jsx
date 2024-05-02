@@ -4,8 +4,10 @@ import WeatherWindBox from "./WeatherWindBox";
 import Thermometer from "./Thermometer";
 import WeatherMainInfos from "./WeatherMainInfos";
 
-export default function Weather({ weatherInfo }) {
+export default function Weather({ weatherInfo, isModal }) {
     const { current, location } = weatherInfo;
+
+    console.log(weatherInfo);
 
     const weatherBox = [
         {
@@ -34,21 +36,17 @@ export default function Weather({ weatherInfo }) {
 
     return (
         <>
-            <div className="flex flex-col w-full h-auto gap-4 md:px-10 md:py-4 lg:max-w-[500px]  ">
-                <div className="flex items-center justify-center gap-4">
-                    <img src={current.weather_icons[0]} alt="weather_icon" />
-
-                    <span className="lg:text-2xl">
-                        {current.weather_descriptions}
-                    </span>
-                </div>
-
+            <div className="flex flex-col w-fit h-auto gap-4 md:px-10 md:py-4 lg:max-w-[500px]">
                 <div className="grid grid-cols-2 auto-rows-auto px-2 gap-x-4 gap-y-2 place-items-center">
                     <WeatherMainInfos
                         country={location.country}
                         name={location.name}
                         region={location.region}
                         temp={current.temperature}
+                        desc={current.weather_descriptions}
+                        icon={current.weather_icons}
+                        isModal={isModal}
+                        isDay={current.is_day}
                     />
 
                     {weatherBox.map(
@@ -59,7 +57,8 @@ export default function Weather({ weatherInfo }) {
                                 icon={icon}
                                 content={content}
                                 component={component}
-                                isModal
+                                isModal={isModal}
+                                isDay={current.is_day}
                             />
                         )
                     )}
@@ -68,7 +67,8 @@ export default function Weather({ weatherInfo }) {
                         wind_degree={current.wind_degree}
                         wind_dir={current.wind_dir}
                         wind_speed={current.wind_speed}
-                        isModal
+                        isModal={isModal}
+                        isDay={current.is_day}
                     />
                 </div>
             </div>

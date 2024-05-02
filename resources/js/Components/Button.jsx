@@ -8,6 +8,8 @@ export default function Button({ text, action, color, ...props }) {
             className={`
             bg-${color}-600 text-white capitalize rounded px-2 hover:ring-${color}-400 hover:ring-1
             disabled:bg-neutral-200 disabled:hover:ring-neutral-300
+            
+            shadow-md
             `}
             onClick={action}
             {...props}

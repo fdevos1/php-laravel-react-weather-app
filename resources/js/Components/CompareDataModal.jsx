@@ -61,7 +61,7 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
 
     return (
         <>
-            <div className="flex flex-col h-full w-full max-h-[700px] px-2 bg-white rounded gap-2 overflow-hidden lg:max-w-[1100px]">
+            <div className="flex flex-col h-full w-full max-h-[700px] px-2 bg-white rounded gap-2 overflow-hidden lg:max-w-[1100px] xl:max-w-[1400px]">
                 <div className="flex w-full justify-between items-center pt-4">
                     <h3>Comparar climas</h3>
                     <button onClick={() => setOpenModal(false)}>
@@ -197,10 +197,10 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                     </div>
 
                     {WEATHER_IS_SELECTED && COMPARE_WEATHER_IS_NOT_SELECTED ? (
-                        <div className="flex flex-col gap-2 items-center lg:flex-row">
+                        <div className="flex flex-col w-full gap-2 items-center lg:flex-row ">
                             <Weather
                                 weatherInfo={selectedWeatherInfo}
-                                isModal
+                                isModal={true}
                             />
 
                             <span className="text-sm text-center text-neutral-500">
@@ -215,18 +215,18 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                     ) : WEATHER_IS_SELECTED &&
                       COMPARE_WEATHER_IS_SELECETD &&
                       !IS_EQUAL ? (
-                        <div className="flex flex-col gap-4 items-center lg:flex-row ">
+                        <div className="flex flex-col gap-4 items-center lg:flex-row xl:w-full xl:justify-center">
                             <div className="h-full">
                                 <Weather
                                     weatherInfo={selectedWeatherInfo}
-                                    isModal
+                                    isModal={true}
                                 />
                             </div>
                             <div className="w-4/5 lg:h-4/5 lg:w-0 border border-neutral-400" />
                             <div className="h-full">
                                 <Weather
                                     weatherInfo={comparisionWeatherInfo}
-                                    isModal
+                                    isModal={true}
                                 />
                             </div>
                         </div>

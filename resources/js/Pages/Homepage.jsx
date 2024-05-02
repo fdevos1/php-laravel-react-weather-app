@@ -83,16 +83,17 @@ export default function Homepage({ queries }) {
                                         <>
                                             {HAS_WEATHER_INFO ? (
                                                 <form
-                                                    className="flex flex-col w-full h-full gap-2 md:px-10"
+                                                    className="flex flex-col w-full h-full gap-8 md:px-10"
                                                     onSubmit={handleSubmit}
                                                 >
                                                     <Weather
                                                         weatherInfo={
                                                             weatherInfo
                                                         }
+                                                        isModal={false}
                                                     />
 
-                                                    <div className="flex flex-col w-full items-center gap-2 px-8">
+                                                    <div className="flex flex-col w-full items-center gap-8 px-8">
                                                         <div>
                                                             <Button
                                                                 text="Salvar"
@@ -105,7 +106,7 @@ export default function Homepage({ queries }) {
                                                             <Button
                                                                 type="button"
                                                                 text="Nova consulta"
-                                                                color="sky"
+                                                                color="blue"
                                                                 action={() =>
                                                                     setWeatherInfo(
                                                                         undefined
@@ -116,7 +117,7 @@ export default function Homepage({ queries }) {
                                                             <Button
                                                                 type="button"
                                                                 text="Comparar clima"
-                                                                color="sky"
+                                                                color="blue"
                                                                 action={() => {
                                                                     setOpenModal(
                                                                         true

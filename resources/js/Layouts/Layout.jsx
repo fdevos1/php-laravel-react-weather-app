@@ -10,7 +10,7 @@ export default function Layout({ children }) {
 
     return (
         <>
-            <div className="flex min-h-screen bg-sky-50 relative">
+            <div className="flex min-h-screen bg-white relative">
                 <Sidebar open={openSidebar} />
                 <div className="flex flex-col justify-between w-full">
                     <Header />
