@@ -197,7 +197,7 @@ export default function CompareDataModal({ retrievedQueries, savedQueries }) {
                     </div>
 
                     {WEATHER_IS_SELECTED && COMPARE_WEATHER_IS_NOT_SELECTED ? (
-                        <div className="flex flex-col w-full gap-2 items-center lg:flex-row ">
+                        <div className="flex flex-col w-full gap-2 items-center lg:items-baseline lg:flex-row ">
                             <Weather
                                 weatherInfo={selectedWeatherInfo}
                                 isModal={true}
