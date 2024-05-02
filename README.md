@@ -26,6 +26,7 @@
 -    Salvar Consultas
  
 
+![salvar consulta](https://github.com/fdevos1/php-laravel-react-weather-app/assets/68919511/c74c54fc-9a61-4856-923f-7aea9da82703)
 
 
 
