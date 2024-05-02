@@ -33,9 +33,6 @@ class QueriesController extends Controller
     {
 
         $data = $request->all();
-
-    
-
         $data['location'] = json_encode($data['location']);
         $data['current'] = json_encode($data['current']);
         
@@ -50,13 +47,6 @@ class QueriesController extends Controller
         $sortDirection = request("sort_direction", "desc");
     
         $queries = $query->orderBy($sortField, $sortDirection)->paginate(10);
-
-
-
-
-
-
-
 
        return Inertia::render('Homepage', [
         'message' => 'consulta salva',
